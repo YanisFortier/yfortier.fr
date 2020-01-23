@@ -4,10 +4,10 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-resume/blob/master/LICENSE)
  */
 
-body {
+ body {
   font-family: 'Muli', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   padding-top: 54px;
-  color: #868e96;
+  color: #6B7178;
 }
 
 @media (min-width: 992px) {
@@ -52,6 +52,7 @@ p.lead {
   font-weight: 500;
   font-family: 'Saira Extra Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   font-size: 1.5rem;
+  color: #4a67ad;
 }
 
 .social-icons a {
@@ -173,4 +174,12 @@ a {
 
 a:hover, a:focus, a:active {
   color: #824027; /* 824027 */
+}
+
+.collapsing {
+  position: relative;
+  height: 0;
+  -webkit-transition: height .5s ease;
+       -o-transition: height .5s ease;
+          transition: height .5s ease;
 }
