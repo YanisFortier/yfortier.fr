@@ -3,11 +3,12 @@
  * Copyright 2013-2019 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-resume/blob/master/LICENSE)
  */
-html, body {
-  width: 100%;
+html,
+body {
   background: #f9f9f9;
 }
- body {
+
+body {
   font-family: 'Muli', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   padding-top: 54px;
   color: #585b61;
@@ -15,7 +16,6 @@ html, body {
 
 @media (min-width: 992px) {
   body {
-    padding-top: 0;
     padding-left: 17rem;
   }
 }
@@ -43,7 +43,7 @@ h2 {
 
 h3 {
   font-size: 2rem;
-  
+
 }
 
 p.lead {
@@ -51,9 +51,10 @@ p.lead {
   font-weight: 400;
 }
 
-li{
-margin-bottom: 3px;
+li {
+  margin-bottom: 3px;
 }
+
 .subheading {
   text-transform: uppercase;
   font-weight: 500;
@@ -112,16 +113,19 @@ margin-bottom: 3px;
     width: 17rem;
     height: 100vh;
   }
+
   #sideNav .navbar-brand {
     display: flex;
     margin: auto auto 0;
     padding: 0.5rem;
   }
+
   #sideNav .navbar-brand .img-profile {
     max-width: 10rem;
     max-height: 10rem;
     border: 0.5rem solid rgba(255, 255, 255, 0.2);
   }
+
   #sideNav .navbar-collapse {
     display: flex;
     align-items: flex-start;
@@ -129,13 +133,16 @@ margin-bottom: 3px;
     width: 100%;
     margin-bottom: auto;
   }
+
   #sideNav .navbar-collapse .navbar-nav {
     flex-direction: column;
     width: 100%;
   }
+
   #sideNav .navbar-collapse .navbar-nav .nav-item {
     display: block;
   }
+
   #sideNav .navbar-collapse .navbar-nav .nav-item .nav-link {
     display: block;
   }
@@ -144,7 +151,7 @@ margin-bottom: 3px;
 section.resume-section {
   padding-top: 5rem !important;
   padding-bottom: 5rem !important;
-  max-width: 75rem;
+  max-width: 95%;
 }
 
 section.resume-section .resume-item .resume-date {
@@ -155,6 +162,7 @@ section.resume-section .resume-item .resume-date {
   section.resume-section {
     min-height: 100vh;
   }
+
   section.resume-section .resume-item .resume-date {
     min-width: 18rem;
   }
@@ -166,9 +174,11 @@ section.resume-section .resume-item .resume-date {
     padding-bottom: 3rem !important;
   }
 }
+
 p {
   color: black;
 }
+
 .bg-primary {
   background-color: #4a67ad !important;
 }
@@ -178,33 +188,39 @@ p {
 }
 
 a {
-  color: #4a67ad; /* BD5D38 */
+  color: #4a67ad;
+  /* BD5D38 */
 }
 
-a:hover, a:focus, a:active {
-  color: #824027; /* 824027 */
+a:hover,
+a:focus,
+a:active {
+  color: #824027;
+  /* 824027 */
 }
 
 .collapsing {
   position: relative;
   height: 0;
   -webkit-transition: height .5s ease;
-       -o-transition: height .5s ease;
-          transition: height .5s ease;
+  -o-transition: height .5s ease;
+  transition: height .5s ease;
 }
 
-.how-section1 h4{
-    font-weight: bold;
+.how-section1 h4 {
+  font-weight: bold;
 }
-.how-section1 .subheading{
-    font-size: 20px;
+
+.how-section1 .subheading {
+  font-size: 20px;
 }
-.how-img 
-{
-    text-align: center;
+
+.how-img {
+  text-align: center;
 }
-.how-img img{
-    width: 40%;
+
+.how-img img {
+  width: 40%;
 }
 
 /*
@@ -214,19 +230,19 @@ a:hover, a:focus, a:active {
 * ==========================================
 */
 .nav-pills-custom .nav-link {
-    color: #aaa;
-    background: #fff;
+  color: #aaa;
+  background: #fff;
 }
 
 .nav-pills-custom .nav-link.active {
-    color: #4a67ad;
-    background: #fff;
+  color: #4a67ad;
+  background: #fff;
 }
 
 
 
 .nav-pills-custom .nav-link.active::before {
-    opacity: 1;
+  opacity: 1;
 }
 
 /* ==========================================
@@ -234,46 +250,65 @@ a:hover, a:focus, a:active {
 *  =========================================*/
 
 ul.timeline {
-    list-style-type: none;
-    position: relative;
+  list-style-type: none;
+  position: relative;
 }
+
 ul.timeline:before {
-    content: ' ';
-    background: #d4d9df;
-    display: inline-block;
-    position: absolute;
-    left: 29px;
-    width: 2px;
-    height: 100%;
-    z-index: 400;
+  content: ' ';
+  background: #d4d9df;
+  display: inline-block;
+  position: absolute;
+  left: 29px;
+  width: 2px;
+  height: 100%;
+  z-index: 400;
 }
-ul.timeline > li {
-    margin: 20px 0;
-    padding-left: 20px;
+
+ul.timeline>li {
+  margin: 20px 0;
+  padding-left: 20px;
 }
-ul.timeline > li:before {
-    content: ' ';
-    background: white;
-    display: inline-block;
-    position: absolute;
-    border-radius: 50%;
-    border: 3px solid #4a67ad;
-    left: 20px;
-    width: 20px;
-    height: 20px;
-    z-index: 400;
-    margin-top:25px;
+
+ul.timeline>li:before {
+  content: ' ';
+  background: white;
+  display: inline-block;
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid #4a67ad;
+  left: 20px;
+  width: 20px;
+  height: 20px;
+  z-index: 400;
+  margin-top: 25px;
 }
 
 i.china.flag:before {
   height: 17px;
 }
 
-#ignore-css:before{height: 11px;}
+#ignore-css:before {
+  height: 11px;
+}
 
 .logo {
-    width: 50px;
-    height: auto;
+  width: 50px;
+  height: auto;
+}
+
+
+.logo-horizontal {
+  width: auto;
+  height: auto;
+}
+
+.columns {
+  list-style-type: disc;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+  columns: 2;
+  list-style-position: inside;
 }
 
 /* ==========================================
@@ -281,8 +316,7 @@ i.china.flag:before {
 *  =========================================*/
 
 .card-img-top {
-    width: 100%;
-    height: 15vw;
-    object-fit: cover;
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
 }
-
