@@ -1,8 +1,9 @@
-<<<<<<< HEAD
-# yfortier.fr
-Best Site EVER
-=======
-## Copyright and License
+Bien sûr! Voici une personnalisation du README en utilisant les informations que vous avez fournies :
 
-Copyright 2013-2019 Blackrock Digital LLC. Code released under the [MIT](https://github.com/BlackrockDigital/startbootstrap-resume/blob/gh-pages/LICENSE) license.
->>>>>>> 34728d7 (🎉 Init git)
+# Site Personnel et Portfolio - yfortier.fr
+
+Bienvenue sur mon site personnel et portfolio ! Ce projet vise à présenter mes compétences, expériences professionnelles, projets et tout ce qui concerne ma carrière en tant que développeur. Le site est accessible à l'adresse [yfortier.fr](https://yfortier.fr).
+
+## Licence
+
+Ce projet est sous licence MIT. Consultez le fichier [LICENSE](LICENSE) pour plus d'informations.
