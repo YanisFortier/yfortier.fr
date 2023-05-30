@@ -1,5 +1,3 @@
-Bien sûr! Voici une personnalisation du README en utilisant les informations que vous avez fournies :
-
 # Site Personnel et Portfolio - yfortier.fr
 
 Bienvenue sur mon site personnel et portfolio ! Ce projet vise à présenter mes compétences, expériences professionnelles, projets et tout ce qui concerne ma carrière en tant que développeur. Le site est accessible à l'adresse [yfortier.fr](https://yfortier.fr).
