@@ -11,7 +11,7 @@ body {
 body {
   font-family: 'Muli', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   padding-top: 54px;
-  color: #585b61;
+  color: #5b5b61;
 }
 
 @media (min-width: 992px) {
@@ -155,7 +155,7 @@ section.resume-section {
 }
 
 section.resume-section .resume-item .resume-date {
-  min-width: none;
+  min-width: auto;
 }
 
 @media (min-width: 768px) {
@@ -297,18 +297,13 @@ i.china.flag:before {
   height: auto;
 }
 
-
-.logo-horizontal {
-  width: auto;
-  height: auto;
-}
-
 .columns {
   list-style-type: disc;
   -webkit-columns: 2;
   -moz-columns: 2;
   columns: 2;
   list-style-position: inside;
+  padding-inline-start: 10px;
 }
 
 /* ==========================================
