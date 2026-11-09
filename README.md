@@ -26,7 +26,7 @@ Le dossier `dist/` est ce qui est mis en ligne chez alwaysdata.
 
 Chaque push sur `master` lance [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) : build, envoi de `dist/` en SSH (rsync), puis vérification que le site répond. Un lancement manuel est possible depuis l'onglet **Actions**, avec l'option « clean » pour supprimer les vieux fichiers distants.
 
-Secrets à créer dans **Settings → Environments → production** :
+Secrets à créer dans **Settings → Environments → AlwaysData** :
 
 | Secret | Contenu |
 |---|---|

@@ -44,7 +44,7 @@ Sober, institutional, accessibility-first (inspired by public-sector design syst
 
 The site is hosted on alwaysdata (Apache). Only the **built `dist/` folder** must be published — the repository root is no longer the website.
 
-**Pushing to `master` deploys to production** via `.github/workflows/deploy.yml` (build → rsync over SSH → HTTP check). Secrets live in the `production` environment: `DEPLOY_SSH_KEY`, `DEPLOY_KNOWN_HOSTS`, `DEPLOY_USER`, `DEPLOY_HOST`, `DEPLOY_PATH`. Actions are pinned by commit SHA; Node version comes from `.nvmrc`. Work on a branch and only push `master` when the user wants it live.
+**Pushing to `master` deploys to production** via `.github/workflows/deploy.yml` (build → rsync over SSH → HTTP check). Secrets live in the `AlwaysData` environment: `DEPLOY_SSH_KEY`, `DEPLOY_KNOWN_HOSTS`, `DEPLOY_USER`, `DEPLOY_HOST`, `DEPLOY_PATH`. Actions are pinned by commit SHA; Node version comes from `.nvmrc`. Work on a branch and only push `master` when the user wants it live.
 
 `npm run deploy` (`scripts/deploy.sh`) builds, shows an rsync dry-run, asks for confirmation, then uploads `dist/` over SSH. Credentials live in `.env.deploy` (gitignored, template in `.env.deploy.example`). `npm run deploy -- --clean` also deletes remote files missing from `dist/` (never `.htaccess` or `.well-known/`). Never run a deploy without the user asking for it.
 

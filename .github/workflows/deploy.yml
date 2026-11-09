@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment:
-      name: production
+      name: AlwaysData
       url: https://www.yfortier.fr
 
     steps:
@@ -62,7 +62,7 @@ jobs:
             [ -n "${!name}" ] || missing+=("$name")
           done
           if [ ${#missing[@]} -gt 0 ]; then
-            echo "::error::Secrets vides ou introuvables : ${missing[*]}. Ils doivent être des *secrets* (pas des variables) dans l'environnement 'production' ou au niveau du dépôt."
+            echo "::error::Secrets vides ou introuvables : ${missing[*]}. Ils doivent être des *secrets* (pas des variables) dans l'environnement 'AlwaysData' ou au niveau du dépôt."
             exit 1
           fi
           echo "Hôte : $DEPLOY_HOST — dossier : $DEPLOY_PATH"
