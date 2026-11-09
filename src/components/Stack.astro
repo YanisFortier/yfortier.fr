@@ -1,12 +1,15 @@
 ---
+import { tr, type Locale, type Tr } from '../i18n/ui';
+
 interface Props {
-  items: readonly string[];
-  label?: string;
+  items: Tr<string>[] | readonly string[];
+  locale: Locale;
+  label: string;
 }
 
-const { items, label = 'Stack technique' } = Astro.props;
+const { items, locale, label } = Astro.props;
 ---
 
 <ul class="stack" aria-label={label}>
-  {items.map((item) => <li>{item}</li>)}
+  {items.map((item) => <li>{tr(item, locale)}</li>)}
 </ul>

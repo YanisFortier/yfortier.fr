@@ -1,25 +1,29 @@
 ---
 import type { Experience } from '../data/types';
+import { period, tr, ui, type Locale } from '../i18n/ui';
 import { rich } from '../lib/rich';
 import Stack from './Stack.astro';
 
 interface Props {
   job: Experience;
+  locale: Locale;
 }
 
-const { job } = Astro.props;
+const { job, locale } = Astro.props;
+const t = ui[locale];
+const company = tr(job.company, locale);
 ---
 
 <li class="job">
   <div class="job__aside">
-    <span class="job__dates">{job.dates}</span>
+    <span class="job__dates">{period(job.start, job.end, locale)}</span>
     {
       job.logo && (
         <img
           class:list={['job__logo', { 'job__logo--boxed': job.logo.background }]}
           style={job.logo.background ? `background:${job.logo.background}` : undefined}
           src={job.logo.src}
-          alt={job.company}
+          alt={company}
           width="96"
           height="40"
           loading="lazy"
@@ -30,29 +34,34 @@ const { job } = Astro.props;
   <div>
     <h3 class="job__company">
       {job.flag && <span class="flag" aria-hidden="true">{job.flag}</span>}
-      {job.company}
+      {company}
     </h3>
     {
-      job.roles.map((role, i) => (
-        <div class:list={{ subrole: i > 0 }}>
-          <p class="job__role">{role.title}</p>
-          {role.missions && (
-            <div class="missions">
-              <p class="mission">
-                <svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor">
-                  <path d="M8 1 1 4.5V6h14V4.5L8 1Zm-5 6v5H2v1.5h12V12h-1V7h-2v5H9V7H7v5H5V7H3Z" />
-                </svg>
-                <span class="visually-hidden">{role.missions.length > 1 ? 'Missions :' : 'Mission :'}</span>
-                {role.missions.join(' · ')}
-              </p>
-            </div>
-          )}
-          <ul class="job__points">
-            {role.points.map((p) => <li set:html={rich(p)} />)}
-          </ul>
-          <Stack items={role.stack} />
-        </div>
-      ))
+      job.roles.map((role, i) => {
+        const missions = role.missions?.[locale];
+        return (
+          <div class:list={{ subrole: i > 0 }}>
+            <p class="job__role">{tr(role.title, locale)}</p>
+            {missions && (
+              <div class="missions">
+                <p class="mission">
+                  <svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor">
+                    <path d="M8 1 1 4.5V6h14V4.5L8 1Zm-5 6v5H2v1.5h12V12h-1V7h-2v5H9V7H7v5H5V7H3Z" />
+                  </svg>
+                  <span class="visually-hidden">{missions.length > 1 ? t.missions : t.mission}</span>
+                  {missions.join(' · ')}
+                </p>
+              </div>
+            )}
+            <ul class="job__points">
+              {role.points[locale].map((p) => (
+                <li set:html={rich(p)} />
+              ))}
+            </ul>
+            <Stack items={role.stack} locale={locale} label={t.stack} />
+          </div>
+        );
+      })
     }
   </div>
 </li>

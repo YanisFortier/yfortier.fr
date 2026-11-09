@@ -1,0 +1,32 @@
+---
+import { languages, locales, ui, type Locale } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<nav class="lang-switch" aria-label={ui[locale].langSwitch}>
+  <ul>
+    {
+      locales.map((l) => (
+        <li>
+          <a
+            href={languages[l].path}
+            hreflang={languages[l].htmlLang}
+            lang={languages[l].htmlLang}
+            title={languages[l].name}
+            aria-current={l === locale ? 'page' : undefined}
+          >
+            <span class="lang-switch__flag" aria-hidden="true">
+              {languages[l].flag}
+            </span>
+            <span class="visually-hidden">{languages[l].name}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

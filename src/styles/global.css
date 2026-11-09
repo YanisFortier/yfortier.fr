@@ -437,3 +437,45 @@ main { padding: 0 var(--s-4); }
   .exchange + .exchange { margin-top: var(--s-4); }
   .groups { gap: var(--s-3); margin-top: var(--s-4); }
 }
+
+/* ============================================================
+   Sélecteur de langue
+   ============================================================ */
+.lang-switch ul { list-style: none; display: flex; gap: var(--s-1); }
+.lang-switch a {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 2.5rem; min-height: 2.25rem; padding: 0 var(--s-2);
+  border: 1px solid transparent; border-radius: var(--radius);
+  text-decoration: none; line-height: 1;
+  opacity: 0.7;
+  transition: opacity 0.15s, border-color 0.15s;
+}
+.lang-switch__flag { font-size: 1.375rem; }
+.lang-switch a:hover { opacity: 1; border-color: rgba(255,255,255,0.35); }
+.lang-switch a[aria-current="page"] {
+  opacity: 1;
+  border-color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.12);
+}
+
+.topbar__actions { display: flex; align-items: center; gap: var(--s-2); }
+@media (max-width: 991.98px) {
+  .lang-switch a { min-width: 2.25rem; min-height: 2.75rem; padding: 0 var(--s-1); }
+  .lang-switch__flag { font-size: 1.25rem; }
+}
+@media (max-width: 359.98px) {
+  .topbar__name { font-size: 0.9375rem; }
+  .lang-switch a { min-width: 2rem; }
+}
+
+/* ============================================================
+   Coréen : police, coupures de mots, pas de capitales forcées
+   ============================================================ */
+:root:lang(ko) {
+  --font: "Public Sans", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+}
+:lang(ko) body { word-break: keep-all; overflow-wrap: anywhere; line-height: 1.7; }
+:lang(ko) .eyebrow,
+:lang(ko) .group__title,
+:lang(ko) .values__lists h4 { letter-spacing: 0.02em; }
+:lang(ko) .hero__title { letter-spacing: -0.02em; }

@@ -1,21 +1,28 @@
 ---
 import { profil } from '../data/profil';
+import { ui, type Locale } from '../i18n/ui';
+import LangSwitch from './LangSwitch.astro';
 
 interface Props {
+  locale: Locale;
   sections: { id: string; label: string }[];
 }
 
-const { sections } = Astro.props;
+const { locale, sections } = Astro.props;
+const t = ui[locale];
 const fullName = `${profil.firstName} ${profil.lastName}`;
 ---
 
 <header class="sidebar">
-  <!-- Mobile : bandeau + menu -->
+  <!-- Mobile : bandeau + langues + menu -->
   <div class="topbar">
     <a class="topbar__name" href={`#${sections[0].id}`}>{fullName}</a>
-    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-mobile">Menu</button>
+    <div class="topbar__actions">
+      <LangSwitch locale={locale} />
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-mobile">{t.menu}</button>
+    </div>
   </div>
-  <nav class="nav nav--mobile" id="menu-mobile" aria-label="Navigation principale (mobile)" hidden>
+  <nav class="nav nav--mobile" id="menu-mobile" aria-label={t.navMobile} hidden>
     <ol>
       {sections.map((s) => <li><a href={`#${s.id}`}>{s.label}</a></li>)}
     </ol>
@@ -23,15 +30,17 @@ const fullName = `${profil.firstName} ${profil.lastName}`;
 
   <!-- PC : barre latérale fixe -->
   <div class="sidebar__inner">
+    <LangSwitch locale={locale} />
+
     <div class="identity">
-      <img class="identity__photo" src={profil.photo} alt={`Portrait de ${fullName}`} width="120" height="120" />
+      <img class="identity__photo" src={profil.photo} alt={t.portrait(fullName)} width="120" height="120" />
       <div>
         <div class="identity__name">{fullName}</div>
-        <div class="identity__role">{profil.title} · {profil.employer}</div>
+        <div class="identity__role">{profil.title[locale]} · {profil.employer}</div>
       </div>
     </div>
 
-    <nav class="nav" aria-label="Navigation principale">
+    <nav class="nav" aria-label={t.navMain}>
       <ol>
         {sections.map((s) => <li><a href={`#${s.id}`}>{s.label}</a></li>)}
       </ol>
@@ -82,5 +91,13 @@ const fullName = `${profil.firstName} ${profil.lastName}`;
   byId.forEach((_, id) => {
     const el = document.getElementById(id);
     if (el) observer.observe(el);
+  });
+
+  // Changement de langue : on garde la section en cours (#experiences…)
+  document.querySelectorAll<HTMLAnchorElement>('.lang-switch a').forEach((a) => {
+    a.addEventListener('click', () => {
+      const current = links.find((l) => l.getAttribute('aria-current') === 'true');
+      if (current && current.hash !== '#accueil') a.hash = current.hash;
+    });
   });
 </script>

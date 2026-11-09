@@ -1,3 +1,10 @@
+import type { L, Tr } from '../i18n/ui';
+
+/*
+ * Chaque texte visible est soit une chaîne identique dans toutes les langues
+ * (noms propres, technos), soit un objet { fr, en, ko }.
+ */
+
 export interface Logo {
   src: string;
   /** Fond à appliquer derrière un logo blanc ou transparent */
@@ -5,46 +12,50 @@ export interface Logo {
 }
 
 export interface Role {
-  title: string;
+  title: Tr<string>;
   /** Ministère·s ou client·s de la mission */
-  missions?: string[];
-  points: string[];
-  stack: string[];
+  missions?: L<string[]>;
+  /** Points de la mission ; **gras** autorisé */
+  points: L<string[]>;
+  stack: Tr<string>[];
 }
 
 export interface Experience {
-  company: string;
+  company: Tr<string>;
   /** Drapeau emoji affiché devant le nom (ex. expérience à l'étranger) */
   flag?: string;
-  dates: string;
+  start: number;
+  /** null = poste actuel ; absent = même année que start */
+  end?: number | null;
   logo?: Logo;
   roles: Role[];
 }
 
 export interface Group {
-  title: string;
-  items: string[];
+  title: L<string>;
+  items: Tr<string[]>;
 }
 
 export interface Exchange {
   flag: string;
-  school: string;
-  country: string;
-  period: string;
+  school: Tr<string>;
+  country: L<string>;
+  period: L<string>;
   groups: Group[];
 }
 
 export interface Formation {
-  school: string;
-  dates: string;
-  degree: string;
+  school: Tr<string>;
+  start: number;
+  end: number;
+  degree: L<string>;
   logo?: Logo;
   groups: Group[];
   exchanges?: Exchange[];
 }
 
 export interface Engagement {
-  title: string;
+  title: L<string>;
   /** Paragraphes ; **gras** autorisé */
-  body: string[];
+  body: L<string[]>;
 }

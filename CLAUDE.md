@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Personal portfolio of Yanis Fortier (yfortier.fr), DevSecOps engineer. One-page static site built with **Astro** (no client framework) and hand-written CSS. French content throughout.
+Personal portfolio of Yanis Fortier (yfortier.fr), DevSecOps engineer. One-page static site built with **Astro** (no client framework) and hand-written CSS, in **3 languages**: French (`/`, default), English (`/en/`) and Korean (`/ko/`).
 
 ## Commands
 
@@ -17,28 +17,32 @@ npm run preview    # serve dist/ locally
 
 ## Architecture
 
+- `src/i18n/ui.ts` — locales (`fr`, `en`, `ko`), interface strings (`ui`), language metadata (flag, path, `lang`, `og:locale`), and helpers: `tr()` picks a field in the current language, `period()` formats dates.
 - `src/data/` — **all content lives here**, as typed TS objects (`types.ts`):
+  - Every visible text is either a plain string (same in all languages: names, tech) or `{ fr, en, ko }` (`L<T>` / `Tr<T>` types). TypeScript forces all 3 translations.
   - `profil.ts` (name, contact, tagline, key facts, CV links, share description)
-  - `experiences.ts` (most recent first; a company can hold several `roles`; `missions` lists ministries/clients)
+  - `experiences.ts` (most recent first; `start`/`end` years, `end: null` = current job; a company can hold several `roles`; `missions` lists ministries/clients)
   - `formations.ts`, `competences.ts`, `engagements.ts`, `distinctions.ts`
   - Text fields accept `**bold**` only (rendered by `src/lib/rich.ts`, HTML is escaped).
-- `src/pages/index.astro` — the single page; composes sections in order.
-- `src/components/` — `Sidebar` (fixed sidebar on desktop, top bar + accessible menu button on mobile, scroll-spy), `Section`, `Job`, `FormationItem`, `Stack`.
-- `src/layouts/Base.astro` — `<head>`, SEO/Open Graph meta, fonts, skip link.
+- `src/components/Resume.astro` — the whole page for a given `locale`. `src/pages/index.astro`, `en/index.astro`, `ko/index.astro` only render it (the Korean page also imports Noto Sans KR).
+- `src/components/` — `Sidebar` (fixed sidebar on desktop, top bar + accessible menu button on mobile, scroll-spy), `LangSwitch` (flag links, keeps the current section when switching), `Section`, `Job`, `FormationItem`, `Stack`.
+- `src/layouts/Base.astro` — `<head>`, `lang`, `hreflang` alternates, SEO/Open Graph meta, fonts, skip link.
 - `src/styles/global.css` — design tokens (`:root`), layout and all component styles. Dark mode via `prefers-color-scheme`.
 - `public/` — served as-is: `img/`, CV PDFs, `favicon.png`, and `jeux/atom/` (standalone game kept at `/jeux/atom/`).
 
 ## Design conventions
 
 Sober, institutional, accessibility-first (inspired by public-sector design systems, without using DSFR or Marianne, which are restricted):
-- Font: Public Sans (self-hosted via `@fontsource/public-sans`).
+- Fonts: Public Sans (self-hosted via `@fontsource/public-sans`); Korean adds Noto Sans KR (`@fontsource/noto-sans-kr`, loaded only on `/ko/`), with `word-break: keep-all`.
 - One accent blue (`--accent`), neutral greys, 1px rules instead of shadows, 2px radius max, no gradients, no emojis in headings.
 - Keep WCAG AA contrast, visible `:focus-visible`, semantic headings (one `h1`), `alt` on every image, decorative SVG/emoji `aria-hidden`.
 
 ## Editing content
 
-- New job: add an entry at the top of `experiences` in `src/data/experiences.ts`; put the logo in `public/img/` and reference it as `/img/<file>`.
-- Do not hardcode content in components — extend the data files/types instead.
+- New job: add an entry at the top of `experiences` in `src/data/experiences.ts` with `fr`, `en` and `ko` texts; put the logo in `public/img/` and reference it as `/img/<file>`.
+- Any content change must be made in the 3 languages. Korean: concise noun-ending style for bullet points (e.g. "… 구축", "… 자동화"), keep tech names in Latin script.
+- Do not hardcode content or UI strings in components — extend the data files / `src/i18n/ui.ts` instead.
+- CVs exist in French and English only; the Korean page links to both (English first).
 
 ## Deployment
 

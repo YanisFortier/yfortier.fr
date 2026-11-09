@@ -1,0 +1,165 @@
+---
+import Base from '../layouts/Base.astro';
+import Sidebar from './Sidebar.astro';
+import Section from './Section.astro';
+import Job from './Job.astro';
+import FormationItem from './FormationItem.astro';
+import Stack from './Stack.astro';
+import { rich } from '../lib/rich';
+import { tr, ui, type Locale } from '../i18n/ui';
+
+import { profil } from '../data/profil';
+import { experiences } from '../data/experiences';
+import { formations } from '../data/formations';
+import { competences, langues } from '../data/competences';
+import { introEngagements, engagements, valeurs } from '../data/engagements';
+import { certifications, prix } from '../data/distinctions';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = ui[locale];
+
+const ids = ['accueil', 'experiences', 'formations', 'competences', 'engagements', 'distinctions'] as const;
+const sections = ids.map((id) => ({ id, label: t.sections[id] }));
+
+const download = '<path d="M8 2v8m0 0 3-3m-3 3L5 7M3 13h10"/>';
+---
+
+<Base locale={locale}>
+  <Sidebar locale={locale} sections={sections} />
+
+  <main id="contenu" tabindex="-1">
+    <!-- Accueil -->
+    <section class="section hero" id="accueil" aria-labelledby="titre-accueil">
+      <span class="eyebrow">{profil.title[locale]}</span>
+      <h1 class="hero__title" id="titre-accueil">{profil.firstName} <span>{profil.lastName}</span></h1>
+      <p class="hero__lead">{profil.lead[locale]}</p>
+
+      <dl class="facts">
+        {
+          profil.facts.map((f) => (
+            <div>
+              <dt>{f.label[locale]}</dt>
+              <dd>{f.value[locale]}</dd>
+            </div>
+          ))
+        }
+      </dl>
+
+      <div class="actions">
+        {
+          t.cv.map((cv, i) => (
+            <a class:list={['btn', { 'btn--primary': i === 0 }]} href={profil.cv[cv.lang as 'fr' | 'en']} hreflang={cv.lang}>
+              <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" set:html={download} />
+              {cv.label} <span class="visually-hidden">{t.pdf}</span>
+            </a>
+          ))
+        }
+        <a class="btn" href={`mailto:${profil.email}`}>{t.contact}</a>
+      </div>
+    </section>
+
+    <Section id="experiences" eyebrow={t.eyebrows.experiences} title={t.sections.experiences}>
+      <ol class="timeline">
+        {experiences.map((job) => <Job job={job} locale={locale} />)}
+      </ol>
+    </Section>
+
+    <Section id="formations" eyebrow={t.eyebrows.formations} title={t.sections.formations}>
+      <ol class="timeline">
+        {formations.map((f) => <FormationItem formation={f} locale={locale} />)}
+      </ol>
+    </Section>
+
+    <Section id="competences" eyebrow={t.eyebrows.competences} title={t.sections.competences}>
+      <div class="skills">
+        {
+          competences.map((g, i) => (
+            <div class:list={['skill-group', { 'skill-group--wide': i === 0 }]}>
+              <h3 class="group__title">{g.title[locale]}</h3>
+              <Stack items={tr(g.items, locale)} locale={locale} label={g.title[locale]} />
+            </div>
+          ))
+        }
+        <div class="skill-group">
+          <h3 class="group__title">{t.languages}</h3>
+          <ul class="langs">
+            {
+              langues.map((l) => (
+                <li>
+                  <span>
+                    <span aria-hidden="true">{l.flag}</span> {l.name[locale]}
+                  </span>
+                  <span class="lvl">{l.level[locale]}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </Section>
+
+    <Section id="engagements" eyebrow={t.eyebrows.engagements} title={t.sections.engagements}>
+      <p class="intro">{introEngagements[locale]}</p>
+
+      <div class="engagements">
+        {
+          engagements.map((e) => (
+            <article class="engagement">
+              <h3 class="engagement__title">{e.title[locale]}</h3>
+              <div>
+                {e.body[locale].map((p) => (
+                  <p set:html={rich(p)} />
+                ))}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="values">
+        <h3 class="values__title">{t.values}</h3>
+        <p set:html={rich(valeurs.texte[locale])} />
+        <div class="values__lists">
+          <div class="v-plus">
+            <h4>{t.valuesPlus}</h4>
+            <ul>{valeurs.valeurs[locale].map((v) => <li>{v}</li>)}</ul>
+          </div>
+          <div class="v-minus">
+            <h4>{t.valuesMinus}</h4>
+            <ul>{valeurs.antiValeurs[locale].map((v) => <li>{v}</li>)}</ul>
+          </div>
+        </div>
+      </div>
+    </Section>
+
+    <Section id="distinctions" eyebrow={t.eyebrows.distinctions} title={t.sections.distinctions}>
+      <div class="awards">
+        <div>
+          <h3>{t.certifications}</h3>
+          <ul>{certifications[locale].map((c) => <li set:html={rich(c)} />)}</ul>
+        </div>
+        <div>
+          <h3>{t.awards}</h3>
+          <ul>
+            {
+              prix.map((p) => (
+                <li class="prize">
+                  <span>{p.event}</span>
+                  <span class="prize__rank">{p.rank[locale]}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </Section>
+
+    <footer class="footer">
+      © {new Date().getFullYear()} {profil.firstName} {profil.lastName} · <a href={profil.linkedin}>LinkedIn</a> · <a href={profil.github}>GitHub</a>
+    </footer>
+  </main>
+</Base>

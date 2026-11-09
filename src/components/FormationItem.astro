@@ -1,29 +1,34 @@
 ---
 import type { Formation } from '../data/types';
+import { period, tr, ui, type Locale } from '../i18n/ui';
 
 interface Props {
   formation: Formation;
+  locale: Locale;
 }
 
-const { formation: f } = Astro.props;
+const { formation: f, locale } = Astro.props;
+const school = tr(f.school, locale);
 ---
 
 <li class="job">
   <div class="job__aside">
-    <span class="job__dates">{f.dates}</span>
-    {f.logo && <img class="job__logo" src={f.logo.src} alt={f.school} width="96" height="40" loading="lazy" />}
+    <span class="job__dates">{period(f.start, f.end, locale)}</span>
+    {f.logo && <img class="job__logo" src={f.logo.src} alt={school} width="96" height="40" loading="lazy" />}
   </div>
   <div>
-    <h3 class="job__company">{f.school}</h3>
-    <p class="degree">{f.degree}</p>
+    <h3 class="job__company">{school}</h3>
+    <p class="degree">{f.degree[locale]}</p>
 
     <div class="groups">
       {
         f.groups.map((g) => (
           <div class="group">
-            <h4 class="group__title">{g.title}</h4>
+            <h4 class="group__title">{g.title[locale]}</h4>
             <ul>
-              {g.items.map((item) => <li>{item}</li>)}
+              {tr(g.items, locale).map((item) => (
+                <li>{item}</li>
+              ))}
             </ul>
           </div>
         ))
@@ -33,21 +38,21 @@ const { formation: f } = Astro.props;
     {
       f.exchanges && (
         <div class="exchanges">
-          <h4 class="exchanges__title">Échanges universitaires internationaux</h4>
+          <h4 class="exchanges__title">{ui[locale].exchanges}</h4>
           {f.exchanges.map((x) => (
             <div class="exchange">
               <div class="exchange__head">
                 <h5 class="exchange__name">
-                  <span aria-hidden="true">{x.flag}</span> {x.school} — {x.country}
+                  <span aria-hidden="true">{x.flag}</span> {tr(x.school, locale)} — {x.country[locale]}
                 </h5>
-                <span class="exchange__period">{x.period}</span>
+                <span class="exchange__period">{x.period[locale]}</span>
               </div>
               <div class="groups">
                 {x.groups.map((g) => (
                   <div class="group">
-                    <h6 class="group__title">{g.title}</h6>
+                    <h6 class="group__title">{g.title[locale]}</h6>
                     <ul>
-                      {g.items.map((item) => (
+                      {tr(g.items, locale).map((item) => (
                         <li>{item}</li>
                       ))}
                     </ul>
