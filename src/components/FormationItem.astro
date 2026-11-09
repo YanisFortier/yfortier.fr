@@ -1,0 +1,63 @@
+---
+import type { Formation } from '../data/types';
+
+interface Props {
+  formation: Formation;
+}
+
+const { formation: f } = Astro.props;
+---
+
+<li class="job">
+  <div class="job__aside">
+    <span class="job__dates">{f.dates}</span>
+    {f.logo && <img class="job__logo" src={f.logo.src} alt={f.school} width="96" height="40" loading="lazy" />}
+  </div>
+  <div>
+    <h3 class="job__company">{f.school}</h3>
+    <p class="degree">{f.degree}</p>
+
+    <div class="groups">
+      {
+        f.groups.map((g) => (
+          <div class="group">
+            <h4 class="group__title">{g.title}</h4>
+            <ul>
+              {g.items.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    {
+      f.exchanges && (
+        <div class="exchanges">
+          <h4 class="exchanges__title">Échanges universitaires internationaux</h4>
+          {f.exchanges.map((x) => (
+            <div class="exchange">
+              <div class="exchange__head">
+                <h5 class="exchange__name">
+                  <span aria-hidden="true">{x.flag}</span> {x.school} — {x.country}
+                </h5>
+                <span class="exchange__period">{x.period}</span>
+              </div>
+              <div class="groups">
+                {x.groups.map((g) => (
+                  <div class="group">
+                    <h6 class="group__title">{g.title}</h6>
+                    <ul>
+                      {g.items.map((item) => (
+                        <li>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</li>

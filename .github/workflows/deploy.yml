@@ -1,0 +1,85 @@
+name: Déploiement alwaysdata
+
+# Chaque push sur master construit le site et envoie dist/ chez alwaysdata.
+# Lancement manuel possible depuis l'onglet Actions, avec option de nettoyage.
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+    inputs:
+      clean:
+        description: "Supprimer côté serveur les fichiers absents de dist/ (jamais .htaccess ni .well-known)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+# Un seul déploiement à la fois ; un nouveau push attend la fin du précédent.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: production
+      url: https://www.yfortier.fr
+
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Installer Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Construire le site
+        run: npm run build
+
+      - name: Vérifier le build
+        run: test -f dist/index.html
+
+      - name: Configurer SSH
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Envoyer dist/ chez alwaysdata
+        env:
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          CLEAN: ${{ inputs.clean == true }}
+        run: |
+          opts=(-rlz --checksum --human-readable --itemize-changes
+            --exclude=.DS_Store --exclude=.htaccess --exclude=.well-known/)
+          if [ "$CLEAN" = "true" ]; then opts+=(--delete); fi
+          rsync "${opts[@]}" \
+            -e "ssh -i $HOME/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes" \
+            dist/ "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH%/}/"
+
+      - name: Vérifier le site en ligne
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' https://www.yfortier.fr/)
+          echo "HTTP $code"
+          test "$code" = "200"
+
+      - name: Nettoyer la clé
+        if: always()
+        run: rm -f ~/.ssh/deploy_key

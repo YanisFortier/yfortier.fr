@@ -1,0 +1,86 @@
+---
+import { profil } from '../data/profil';
+
+interface Props {
+  sections: { id: string; label: string }[];
+}
+
+const { sections } = Astro.props;
+const fullName = `${profil.firstName} ${profil.lastName}`;
+---
+
+<header class="sidebar">
+  <!-- Mobile : bandeau + menu -->
+  <div class="topbar">
+    <a class="topbar__name" href={`#${sections[0].id}`}>{fullName}</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-mobile">Menu</button>
+  </div>
+  <nav class="nav nav--mobile" id="menu-mobile" aria-label="Navigation principale (mobile)" hidden>
+    <ol>
+      {sections.map((s) => <li><a href={`#${s.id}`}>{s.label}</a></li>)}
+    </ol>
+  </nav>
+
+  <!-- PC : barre latérale fixe -->
+  <div class="sidebar__inner">
+    <div class="identity">
+      <img class="identity__photo" src={profil.photo} alt={`Portrait de ${fullName}`} width="120" height="120" />
+      <div>
+        <div class="identity__name">{fullName}</div>
+        <div class="identity__role">{profil.title} · {profil.employer}</div>
+      </div>
+    </div>
+
+    <nav class="nav" aria-label="Navigation principale">
+      <ol>
+        {sections.map((s) => <li><a href={`#${s.id}`}>{s.label}</a></li>)}
+      </ol>
+    </nav>
+
+    <div class="contact">
+      <a href={`mailto:${profil.email}`}>{profil.email}</a>
+      <a href={profil.linkedin}>LinkedIn</a>
+      <a href={profil.github}>GitHub</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Menu mobile : bouton accessible, se referme après un choix ou avec Échap
+  const btn = document.querySelector<HTMLButtonElement>('.menu-btn');
+  const menu = document.getElementById('menu-mobile');
+  if (btn && menu) {
+    const setOpen = (open: boolean) => {
+      btn.setAttribute('aria-expanded', String(open));
+      menu.hidden = !open;
+    };
+    btn.addEventListener('click', () => setOpen(menu.hidden));
+    menu.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !menu.hidden) {
+        setOpen(false);
+        btn.focus();
+      }
+    });
+  }
+
+  // Section courante mise en évidence dans le menu
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.sidebar__inner .nav a'));
+  const byId = new Map(links.map((a) => [a.hash.slice(1), a]));
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        links.forEach((a) => a.removeAttribute('aria-current'));
+        byId.get(entry.target.id)?.setAttribute('aria-current', 'true');
+      }
+    },
+    { rootMargin: '-45% 0px -50% 0px' },
+  );
+  byId.forEach((_, id) => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+</script>

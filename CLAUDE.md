@@ -4,89 +4,50 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a static personal portfolio website for Yanis Fortier (yfortier.fr), a DevOps engineer. The site is a single-page application built with vanilla HTML, CSS, and JavaScript using Bootstrap for layout and styling.
+Personal portfolio of Yanis Fortier (yfortier.fr), DevSecOps engineer. One-page static site built with **Astro** (no client framework) and hand-written CSS. French content throughout.
+
+## Commands
+
+```bash
+npm install        # first time
+npm run dev        # dev server on http://localhost:4321
+npm run build      # static output in dist/
+npm run preview    # serve dist/ locally
+```
 
 ## Architecture
 
-**Static Site Structure:**
-- Single-page portfolio with smooth scrolling navigation
-- Bootstrap 4 based responsive layout with fixed sidebar navigation
-- Sections: About, Experience, Education, Skills, Engagements, Awards
-- French language content throughout
+- `src/data/` — **all content lives here**, as typed TS objects (`types.ts`):
+  - `profil.ts` (name, contact, tagline, key facts, CV links, share description)
+  - `experiences.ts` (most recent first; a company can hold several `roles`; `missions` lists ministries/clients)
+  - `formations.ts`, `competences.ts`, `engagements.ts`, `distinctions.ts`
+  - Text fields accept `**bold**` only (rendered by `src/lib/rich.ts`, HTML is escaped).
+- `src/pages/index.astro` — the single page; composes sections in order.
+- `src/components/` — `Sidebar` (fixed sidebar on desktop, top bar + accessible menu button on mobile, scroll-spy), `Section`, `Job`, `FormationItem`, `Stack`.
+- `src/layouts/Base.astro` — `<head>`, SEO/Open Graph meta, fonts, skip link.
+- `src/styles/global.css` — design tokens (`:root`), layout and all component styles. Dark mode via `prefers-color-scheme`.
+- `public/` — served as-is: `img/`, CV PDFs, `favicon.png`, and `jeux/atom/` (standalone game kept at `/jeux/atom/`).
 
-**Key Files:**
-- `index.html` - Main and only HTML page containing all content
-- `css/resume.css` - Custom styles (based on Start Bootstrap Resume template)
-- `js/resume.min.js` - Custom JavaScript for smooth scrolling and interactions
-- `vendor/` - Third-party libraries (Bootstrap, jQuery, FontAwesome, etc.)
-- `img/` - Images and profile photos
-- `CV_FORTIER_Yanis_2025.pdf` and `CV_FORTIER_Yanis_2025_English.pdf` - Downloadable CVs
-- `jeux/` - Contains game-related projects (subdirectory with atom game)
+## Design conventions
 
-**Technology Stack:**
-- Pure HTML5/CSS3/JavaScript (no build process)
-- Bootstrap 4 for responsive grid and components
-- jQuery for DOM manipulation and smooth scrolling
-- FontAwesome for icons
-- Google Fonts (Saira Extra Condensed, Muli)
-- MDBootstrap flag icons
+Sober, institutional, accessibility-first (inspired by public-sector design systems, without using DSFR or Marianne, which are restricted):
+- Font: Public Sans (self-hosted via `@fontsource/public-sans`).
+- One accent blue (`--accent`), neutral greys, 1px rules instead of shadows, 2px radius max, no gradients, no emojis in headings.
+- Keep WCAG AA contrast, visible `:focus-visible`, semantic headings (one `h1`), `alt` on every image, decorative SVG/emoji `aria-hidden`.
 
-## Development Workflow
+## Editing content
 
-**Testing locally:**
-Since this is a static site, simply open `index.html` in a browser or use a local web server:
-```bash
-# Using Python
-python -m http.server 8000
+- New job: add an entry at the top of `experiences` in `src/data/experiences.ts`; put the logo in `public/img/` and reference it as `/img/<file>`.
+- Do not hardcode content in components — extend the data files/types instead.
 
-# Using PHP
-php -S localhost:8000
+## Deployment
 
-# Then visit http://localhost:8000
-```
+The site is hosted on alwaysdata (Apache). Only the **built `dist/` folder** must be published — the repository root is no longer the website.
 
-**No build process:**
-There are no npm scripts, webpack, or build tools. Changes to HTML/CSS/JS are immediately reflected when refreshing the browser.
+**Pushing to `master` deploys to production** via `.github/workflows/deploy.yml` (build → rsync over SSH → HTTP check). Secrets live in the `production` environment: `DEPLOY_SSH_KEY`, `DEPLOY_KNOWN_HOSTS`, `DEPLOY_USER`, `DEPLOY_HOST`, `DEPLOY_PATH`. Actions are pinned by commit SHA; Node version comes from `.nvmrc`. Work on a branch and only push `master` when the user wants it live.
 
-**Deployment:**
-The site is served from the repository as-is. Any changes to `index.html`, CSS, or JS files are production changes.
+`npm run deploy` (`scripts/deploy.sh`) builds, shows an rsync dry-run, asks for confirmation, then uploads `dist/` over SSH. Credentials live in `.env.deploy` (gitignored, template in `.env.deploy.example`). `npm run deploy -- --clean` also deletes remote files missing from `dist/` (never `.htaccess` or `.well-known/`). Never run a deploy without the user asking for it.
 
-## Content Structure
+## Git
 
-The site follows a vertical scrolling pattern with these main sections accessible via navbar:
-1. `#about` - Personal introduction and contact info
-2. `#experience` - Work history (Sopra Steria, AI project in China, ITEC, STMicroelectronics, Tours Métropole)
-3. `#formation` - Educational background (timeline format)
-4. `#skills` - Programming languages, software skills, spoken languages
-5. `#engagements` - Volunteer work and personal values (tabbed interface)
-6. `#awards` - Certifications and achievements
-
-## Important Conventions
-
-**Editing Content:**
-- All text content is inline in `index.html` - there's no CMS or separate content files
-- French is the primary language; maintain consistent tone and formality
-- Profile information (address, email, phone) is hardcoded in the About section
-- When updating experience or education, maintain the existing card/timeline structure
-
-**Styling:**
-- Custom styles extend the Start Bootstrap Resume theme
-- Primary color scheme uses `text-primary` class (blue accent)
-- Images should maintain responsive classes: `img-fluid`
-- Icons use FontAwesome 5 or Devicon classes
-
-**Images:**
-- Profile picture: `img/profile.jpg`
-- Company logos follow pattern: `img/[company].jpg`
-- Store all images in `img/` directory
-
-## External Dependencies
-
-All dependencies are vendored in the `vendor/` directory:
-- Bootstrap 4
-- jQuery
-- jQuery Easing
-- FontAwesome Free
-- MDBootstrap (flag icons)
-
-No package manager or CDN dependencies need to be managed.
+Do not add any Claude attribution (Co-Authored-By, "Generated with Claude Code") to commits or PRs.

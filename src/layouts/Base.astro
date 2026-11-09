@@ -1,0 +1,48 @@
+---
+import '@fontsource/public-sans/400.css';
+import '@fontsource/public-sans/400-italic.css';
+import '@fontsource/public-sans/500.css';
+import '@fontsource/public-sans/600.css';
+import '@fontsource/public-sans/700.css';
+import '@fontsource/public-sans/800.css';
+import '../styles/global.css';
+import { profil } from '../data/profil';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${profil.firstName} ${profil.lastName} — ${profil.title}`,
+  description = profil.description,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/img/og_image.jpg', Astro.site);
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={`${profil.firstName} ${profil.lastName}`} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="theme-color" content="#1b3266" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+    <slot />
+  </body>
+</html>
