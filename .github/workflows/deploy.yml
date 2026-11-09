@@ -49,6 +49,24 @@ jobs:
       - name: Vérifier le build
         run: test -f dist/index.html
 
+      - name: Vérifier les secrets
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          missing=()
+          for name in DEPLOY_SSH_KEY DEPLOY_KNOWN_HOSTS DEPLOY_USER DEPLOY_HOST DEPLOY_PATH; do
+            [ -n "${!name}" ] || missing+=("$name")
+          done
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "::error::Secrets vides ou introuvables : ${missing[*]}. Ils doivent être des *secrets* (pas des variables) dans l'environnement 'production' ou au niveau du dépôt."
+            exit 1
+          fi
+          echo "Hôte : $DEPLOY_HOST — dossier : $DEPLOY_PATH"
+
       - name: Configurer SSH
         env:
           SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
