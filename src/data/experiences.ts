@@ -15,15 +15,11 @@ export const experiences: Experience[] = [
     logo: { src: '/img/logo_wescale.png' },
     roles: [
       {
-        title: {
-          fr: 'DevSecOps — Mission Cloud & IA souveraine',
-          en: 'DevSecOps — Sovereign Cloud & AI engagement',
-          ko: 'DevSecOps — 소버린 클라우드 & AI 프로젝트',
-        },
+        title: { fr: 'Consultant DevSecOps Senior', en: 'Senior DevSecOps Consultant', ko: '시니어 DevSecOps 컨설턴트' },
         missions: {
-          fr: [ministere.interieur.fr],
-          en: [ministere.interieur.en],
-          ko: [ministere.interieur.ko],
+          fr: [`${ministere.interieur.fr} · Cloud & IA souveraine`],
+          en: [`${ministere.interieur.en} · Sovereign Cloud & AI`],
+          ko: [`${ministere.interieur.ko} · 소버린 클라우드 & AI`],
         },
         points: {
           fr: [
@@ -63,7 +59,7 @@ export const experiences: Experience[] = [
     logo: { src: '/img/logo_accenture.svg' },
     roles: [
       {
-        title: { fr: 'Senior DevSecOps', en: 'Senior DevSecOps Engineer', ko: '시니어 DevSecOps 엔지니어' },
+        title: { fr: 'Consultant DevSecOps Senior', en: 'Senior DevSecOps Consultant', ko: '시니어 DevSecOps 컨설턴트' },
         missions: {
           fr: [ministere.justice.fr, ministere.travail.fr],
           en: [ministere.justice.en, ministere.travail.en],
@@ -151,9 +147,9 @@ export const experiences: Experience[] = [
     roles: [
       {
         title: {
-          fr: 'Développeur Full Stack Java & Angular',
-          en: 'Full Stack Developer — Java & Angular',
-          ko: '풀스택 개발자 (Java & Angular)',
+          fr: 'Consultant Développeur Full Stack — Java & Angular',
+          en: 'Full Stack Developer Consultant — Java & Angular',
+          ko: '풀스택 개발 컨설턴트 (Java & Angular)',
         },
         missions: {
           fr: [ministere.justice.fr],

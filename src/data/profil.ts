@@ -2,9 +2,9 @@ export const profil = {
   firstName: 'Yanis',
   lastName: 'Fortier',
   title: {
-    fr: 'Ingénieur DevSecOps',
-    en: 'DevSecOps Engineer',
-    ko: 'DevSecOps 엔지니어',
+    fr: 'Consultant DevSecOps Senior',
+    en: 'Senior DevSecOps Consultant',
+    ko: '시니어 DevSecOps 컨설턴트',
   },
   employer: 'WeScale',
   photo: '/img/profile.jpg',
@@ -39,8 +39,8 @@ export const profil = {
   },
   /** Texte des aperçus de partage (LinkedIn, Slack…) */
   description: {
-    fr: 'Yanis Fortier, ingénieur DevSecOps chez WeScale : plateformes Cloud sécurisées, CI/CD et Infrastructure as Code pour le secteur public.',
-    en: 'Yanis Fortier, DevSecOps engineer at WeScale: secure cloud platforms, CI/CD and Infrastructure as Code for the public sector.',
-    ko: 'Yanis Fortier — WeScale DevSecOps 엔지니어. 공공 부문을 위한 보안 클라우드 플랫폼, CI/CD, IaC(Infrastructure as Code) 전문.',
+    fr: 'Yanis Fortier, consultant DevSecOps senior chez WeScale : plateformes Cloud sécurisées, CI/CD et Infrastructure as Code pour le secteur public.',
+    en: 'Yanis Fortier, Senior DevSecOps Consultant at WeScale: secure cloud platforms, CI/CD and Infrastructure as Code for the public sector.',
+    ko: 'Yanis Fortier — WeScale 시니어 DevSecOps 컨설턴트. 공공 부문을 위한 보안 클라우드 플랫폼, CI/CD, IaC(Infrastructure as Code) 전문.',
   },
 } as const;
