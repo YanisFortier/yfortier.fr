@@ -5,12 +5,6 @@ import type { L, Tr } from '../i18n/ui';
  * (noms propres, technos), soit un objet { fr, en, ko }.
  */
 
-export interface Logo {
-  src: string;
-  /** Fond à appliquer derrière un logo blanc ou transparent */
-  background?: string;
-}
-
 export interface Role {
   title: Tr<string>;
   /** Ministère·s ou client·s de la mission */
@@ -27,7 +21,8 @@ export interface Experience {
   start: number;
   /** null = poste actuel ; absent = même année que start */
   end?: number | null;
-  logo?: Logo;
+  /** Identifiant du logo standardisé : public/img/logos/<logo>-light|dark.png (voir scripts/build-logos.mjs) */
+  logo: string;
   roles: Role[];
 }
 
@@ -49,7 +44,8 @@ export interface Formation {
   start: number;
   end: number;
   degree: L<string>;
-  logo?: Logo;
+  /** Identifiant du logo standardisé : public/img/logos/<logo>-light|dark.png (voir scripts/build-logos.mjs) */
+  logo: string;
   groups: Group[];
   exchanges?: Exchange[];
 }

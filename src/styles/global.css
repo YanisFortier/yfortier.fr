@@ -2,12 +2,10 @@
    Tokens
    ============================================================ */
 :root {
-  --blue-900: #12234a;
-  --blue-800: #1b3266;
-  --blue-700: #23418a;
-  --blue-600: #2c50a8;   /* accent principal — 7.6:1 sur blanc */
-  --blue-100: #e8edf7;
-  --blue-050: #f4f6fb;
+  /* Un seul bleu de marque : celui de la barre latérale (teinte 222°), décliné en nuances */
+  --blue-900: #122245;   /* survol des boutons pleins */
+  --blue-800: #1b3266;   /* bleu de marque — barre latérale, titres, liens, boutons (12,4:1 sur blanc) */
+  --blue-100: #e7ecf9;   /* fond doux */
 
   --grey-900: #161616;
   --grey-700: #3a3a3a;
@@ -23,7 +21,10 @@
   --text-muted: var(--grey-600);
   --rule: var(--grey-200);
   --rule-strong: var(--grey-300);
-  --accent: var(--blue-600);
+  /* Un seul bleu, identique dans les deux thèmes : le marine du menu */
+  --brand: var(--blue-800);
+  --accent: var(--brand);    /* texte d'accent ; passe en blanc en thème sombre (marine illisible sur noir) */
+  --on-brand-rgb: 255, 255, 255;   /* texte posé sur le bleu (menu, bouton plein) */
   --accent-soft: var(--blue-100);
 
   --font: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -47,8 +48,9 @@
   --text-muted: #a8a8a8;
   --rule: #2e2e2e;
   --rule-strong: #3d3d3d;
-  --accent: #8fa8ec;
-  --accent-soft: #1f2a44;
+  /* Le marine du menu reste le même ; seul le texte d'accent passe en blanc */
+  --accent: #ffffff;
+  --accent-soft: #1f2a41;
 }
 
 /* ============================================================
@@ -99,8 +101,8 @@ a:hover { text-decoration-thickness: 2px; }
    Layout : barre latérale fixe (PC) / en-tête (mobile)
    ============================================================ */
 .sidebar {
-  background: var(--blue-800);
-  color: var(--white);
+  background: var(--brand);
+  color: rgb(var(--on-brand-rgb));
 }
 
 .sidebar a { color: inherit; }
@@ -116,7 +118,7 @@ a:hover { text-decoration-thickness: 2px; }
 .identity__photo {
   width: 7.5rem; aspect-ratio: 1; object-fit: cover; object-position: center 20%;
   border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.9);
+  border: 2px solid rgba(var(--on-brand-rgb), 0.9);
 }
 
 .identity__name {
@@ -125,30 +127,30 @@ a:hover { text-decoration-thickness: 2px; }
 
 .identity__role {
   margin-top: var(--s-1);
-  font-size: 0.875rem; color: rgba(255,255,255,0.78);
+  font-size: 0.875rem; color: rgba(var(--on-brand-rgb), 0.78);
 }
 
-.nav ol { list-style: none; counter-reset: nav; border-top: 1px solid rgba(255,255,255,0.18); }
-.nav li { counter-increment: nav; border-bottom: 1px solid rgba(255,255,255,0.18); }
+.nav ol { list-style: none; counter-reset: nav; border-top: 1px solid rgba(var(--on-brand-rgb), 0.18); }
+.nav li { counter-increment: nav; border-bottom: 1px solid rgba(var(--on-brand-rgb), 0.18); }
 .nav a {
   display: flex; align-items: baseline; gap: var(--s-3);
   padding: var(--s-3) 0;
   font-size: 0.9375rem; font-weight: 600; text-decoration: none;
-  color: rgba(255,255,255,0.86);
+  color: rgba(var(--on-brand-rgb), 0.86);
 }
 .nav a::before {
   content: counter(nav, decimal-leading-zero);
   font-size: 0.75rem; font-weight: 500; font-variant-numeric: tabular-nums;
-  color: rgba(255,255,255,0.55);
+  color: rgba(var(--on-brand-rgb), 0.7);
 }
-.nav a:hover, .nav a[aria-current="true"] { color: var(--white); }
-.nav a[aria-current="true"] { box-shadow: inset 3px 0 0 var(--white); padding-left: var(--s-3); }
+.nav a:hover, .nav a[aria-current="true"] { color: rgb(var(--on-brand-rgb)); }
+.nav a[aria-current="true"] { box-shadow: inset 3px 0 0 rgb(var(--on-brand-rgb)); padding-left: var(--s-3); }
 
 .contact { margin-top: auto; font-size: 0.875rem; display: grid; gap: var(--s-2); }
-.contact a { text-decoration: none; color: rgba(255,255,255,0.86); }
-.contact a:hover { color: var(--white); text-decoration: underline; }
+.contact a { text-decoration: none; color: rgba(var(--on-brand-rgb), 0.86); }
+.contact a:hover { color: rgb(var(--on-brand-rgb)); text-decoration: underline; }
 
-.sidebar :focus-visible { outline-color: var(--white); }
+.sidebar :focus-visible { outline-color: rgb(var(--on-brand-rgb)); }
 
 /* Mobile : en-tête compact + menu repliable natif */
 .topbar { display: none; }
@@ -160,18 +162,18 @@ a:hover { text-decoration-thickness: 2px; }
     display: flex; align-items: center; justify-content: space-between;
     padding: var(--s-3) var(--s-4);
   }
-  .topbar__name { font-weight: 800; font-size: 1.0625rem; text-decoration: none; color: var(--white); }
+  .topbar__name { font-weight: 800; font-size: 1.0625rem; text-decoration: none; color: rgb(var(--on-brand-rgb)); }
   .menu-btn {
     cursor: pointer;
     min-height: 2.75rem; padding: var(--s-2) var(--s-4);
     font: inherit; font-size: 0.875rem; font-weight: 600;
-    color: var(--white); background: transparent;
-    border: 1px solid rgba(255,255,255,0.5); border-radius: var(--radius);
+    color: rgb(var(--on-brand-rgb)); background: transparent;
+    border: 1px solid rgba(var(--on-brand-rgb), 0.5); border-radius: var(--radius);
   }
-  .menu-btn[aria-expanded="true"] { background: var(--white); color: var(--blue-800); }
+  .menu-btn[aria-expanded="true"] { background: rgb(var(--on-brand-rgb)); color: var(--brand); }
   .nav--mobile {
     position: absolute; left: 0; right: 0; top: 100%;
-    background: var(--blue-800); padding: 0 var(--s-4) var(--s-4);
+    background: var(--brand); padding: 0 var(--s-4) var(--s-4);
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
   }
 }
@@ -247,11 +249,10 @@ main { padding: 0 var(--s-4); }
   color: var(--accent); background: transparent;
 }
 .btn:hover { background: var(--accent-soft); }
-.btn--primary { background: var(--accent); color: var(--white); }
-.btn--primary:hover { background: var(--blue-700); }
+.btn--primary { background: var(--brand); border-color: var(--brand); color: rgb(var(--on-brand-rgb)); }
+.btn--primary:hover { background: var(--blue-900); }
 /* Thème sombre (choisi via le bouton) */
-:root[data-theme="dark"] .btn--primary { color: #0d1630; }
-:root[data-theme="dark"] .btn--primary:hover { background: #b3c4f2; }
+:root[data-theme="dark"] .btn--primary:hover { background: #24427f; border-color: #24427f; }
 .btn svg { width: 1em; height: 1em; flex: none; }
 
 /* ============================================================
@@ -280,18 +281,6 @@ main { padding: 0 var(--s-4); }
   color: var(--text-muted);
 }
 
-.job__logo {
-  width: 6rem; height: 2.5rem; object-fit: contain; object-position: left center;
-}
-/* Thème sombre (choisi via le bouton) */
-:root[data-theme="dark"] .job__logo {
-  /* les logos ont un fond blanc : on les pose tous sur une même plaque claire */
-  box-sizing: border-box;
-  background: #fff; padding: 4px 8px;
-  object-position: center;
-  border-radius: var(--radius);
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
-}
 
 .job__company { font-size: 1.5rem; font-weight: 800; }
 .job__role { margin-top: var(--s-1); font-size: 1.0625rem; font-weight: 600; color: var(--accent); }
@@ -302,7 +291,7 @@ main { padding: 0 var(--s-4); }
   padding: var(--s-1) var(--s-3);
   font-size: 0.875rem; font-weight: 600;
   background: var(--surface);
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--brand);
 }
 .mission svg { width: 1rem; height: 1rem; flex: none; color: var(--accent); }
 
@@ -333,7 +322,6 @@ main { padding: 0 var(--s-4); }
 /* ============================================================
    Expériences — compléments
    ============================================================ */
-.job__logo--boxed { padding: 3px 6px; border-radius: var(--radius); }
 .job__company .flag { margin-right: var(--s-2); }
 .mission + .mission { margin-left: var(--s-2); }
 .job__role + .mission { display: inline-flex; }
@@ -363,7 +351,7 @@ main { padding: 0 var(--s-4); }
   margin-top: var(--s-6);
   padding: var(--s-5);
   background: var(--surface);
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--brand);
 }
 .exchanges__title { font-size: 1.0625rem; font-weight: 800; }
 .exchange { padding-top: var(--s-5); }
@@ -446,32 +434,38 @@ main { padding: 0 var(--s-4); }
 /* ============================================================
    Sélecteur de langue
    ============================================================ */
-.lang-switch ul { list-style: none; display: flex; gap: var(--s-1); }
+/* Un seul cadre autour des 3 drapeaux, identique au bouton de thème voisin.
+   La langue active est en pleine couleur, les autres atténuées (pas de fond). */
+.lang-switch ul {
+  list-style: none; display: inline-flex; width: max-content;
+  border: 1px solid var(--ls-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.lang-switch li + li { border-left: 1px solid var(--ls-border); }
 .lang-switch a {
-  display: inline-flex; align-items: center; justify-content: center;
-  min-width: 2.5rem; min-height: 2.25rem; padding: 0 var(--s-2);
-  border: 1px solid transparent; border-radius: var(--radius);
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  width: 2.75rem; height: calc(2.75rem - 2px); /* 2.75rem au total avec le cadre */
   text-decoration: none; line-height: 1;
-  opacity: 0.7;
-  transition: opacity 0.15s, border-color 0.15s;
+  opacity: 0.45; filter: saturate(0.6);
+  transition: opacity 0.15s, filter 0.15s, background-color 0.15s;
 }
-.lang-switch__flag { font-size: 1.375rem; }
-.lang-switch a:hover { opacity: 1; border-color: rgba(255,255,255,0.35); }
-.lang-switch a[aria-current="page"] {
-  opacity: 1;
-  border-color: rgba(255,255,255,0.9);
-  background: rgba(255,255,255,0.12);
+.lang-switch a:hover { opacity: 1; filter: none; background: var(--ls-hover); }
+.lang-switch a[aria-current="page"] { opacity: 1; filter: none; }
+/* Repère de la langue active : un trait sous le drapeau */
+.lang-switch a[aria-current="page"]::after {
+  content: ""; position: absolute; left: 25%; right: 25%; bottom: 5px;
+  height: 2px; border-radius: 1px; background: var(--ls-mark);
 }
+.lang-switch__flag { font-size: 1.25rem; }
+.lang-switch a:focus-visible { outline-offset: -3px; }
+
+.lang-switch--bar { --ls-border: rgba(var(--on-brand-rgb), 0.5); --ls-hover: rgba(var(--on-brand-rgb), 0.12); --ls-mark: rgb(var(--on-brand-rgb)); }
+.lang-switch--page { --ls-border: var(--rule-strong); --ls-hover: var(--surface); --ls-mark: var(--accent); }
+.lang-switch--page ul { background: var(--bg); }
 
 .topbar__actions { display: flex; align-items: center; gap: var(--s-2); }
-@media (max-width: 991.98px) {
-  .lang-switch a { min-width: 2.25rem; min-height: 2.75rem; padding: 0 var(--s-1); }
-  .lang-switch__flag { font-size: 1.25rem; }
-}
-@media (max-width: 359.98px) {
-  .topbar__name { font-size: 0.9375rem; }
-  .lang-switch a { min-width: 2rem; }
-}
 
 /* ============================================================
    Coréen : police, coupures de mots, pas de capitales forcées
@@ -500,23 +494,26 @@ main { padding: 0 var(--s-4); }
 .theme-toggle[aria-pressed="true"] .theme-toggle__sun { display: block; }
 .theme-toggle[aria-pressed="true"] .theme-toggle__moon { display: none; }
 
-/* PC : en haut à droite de la page */
-.theme-toggle--fixed {
-  position: fixed; top: var(--s-4); right: var(--s-4); z-index: 20;
+/* PC : langues + thème regroupés en haut à droite de la page (défilent avec elle) */
+.page-tools {
+  position: absolute; top: var(--s-4); right: var(--s-4); z-index: 20;
+  display: flex; align-items: center; gap: var(--s-2);
+}
+.theme-toggle--page {
   color: var(--text);
   background: var(--bg);
   border: 1px solid var(--rule-strong);
 }
-.theme-toggle--fixed:hover { border-color: var(--accent); color: var(--accent); }
+.theme-toggle--page:hover { color: var(--accent); background: var(--surface); }
 
 /* Mobile : dans le bandeau bleu */
 .theme-toggle--bar {
-  color: var(--white); background: transparent;
-  border: 1px solid rgba(255,255,255,0.5);
+  color: rgb(var(--on-brand-rgb)); background: transparent;
+  border: 1px solid rgba(var(--on-brand-rgb), 0.5);
 }
-.theme-toggle--bar:hover { background: rgba(255,255,255,0.12); }
+.theme-toggle--bar:hover { background: rgba(var(--on-brand-rgb), 0.12); }
 
-@media (max-width: 991.98px) { .theme-toggle--fixed { display: none; } }
+@media (max-width: 991.98px) { .page-tools { display: none; } }
 @media (min-width: 992px) { .theme-toggle--bar { display: none; } }
 
 /* Bandeau mobile un peu plus serré pour tout faire tenir */
@@ -524,9 +521,35 @@ main { padding: 0 var(--s-4); }
   .topbar__actions { gap: var(--s-1); }
   .menu-btn { padding: var(--s-2) var(--s-3); }
 }
+@media (max-width: 991.98px) {
+  .menu-btn { min-height: 2.75rem; height: 2.75rem; }
+}
 @media (max-width: 399.98px) {
   .topbar { padding-left: var(--s-3); padding-right: var(--s-3); }
   .topbar__name { font-size: 0.9375rem; }
-  .lang-switch a { min-width: 2rem; padding: 0; }
+  .lang-switch a { width: 2.25rem; }
   .theme-toggle--bar { width: 2.5rem; }
 }
+
+
+/* ============================================================
+   Logos des organismes — format unique 3:1, fond transparent,
+   version claire ou sombre selon le thème (générés par `npm run logos`)
+   ============================================================ */
+.logo { display: block; width: 7.5rem; height: 2.5rem; flex: none; }
+.logo__img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.logo__img--dark { display: none; }
+:root[data-theme="dark"] .logo__img--light { display: none; }
+:root[data-theme="dark"] .logo__img--dark { display: block; }
+
+/* ============================================================
+   Icônes de contact (barre latérale + pied de page)
+   ============================================================ */
+.icon { width: 1rem; height: 1rem; flex: none; }
+.contact a, .footer__links a { display: inline-flex; align-items: center; gap: var(--s-2); }
+.contact .icon { opacity: 0.85; }
+
+.footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-3) var(--s-5); }
+.footer__links { list-style: none; display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5); }
+.footer__links a { min-height: 2.75rem; color: var(--text-muted); text-decoration: none; }
+.footer__links a:hover { color: var(--accent); text-decoration: underline; }

@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import Sidebar from './Sidebar.astro';
 import ThemeToggle from './ThemeToggle.astro';
+import LangSwitch from './LangSwitch.astro';
+import Icon from './Icon.astro';
 import Section from './Section.astro';
 import Job from './Job.astro';
 import FormationItem from './FormationItem.astro';
@@ -31,7 +33,10 @@ const download = '<path d="M8 2v8m0 0 3-3m-3 3L5 7M3 13h10"/>';
 
 <Base locale={locale}>
   <Sidebar locale={locale} sections={sections} />
-  <ThemeToggle locale={locale} class="theme-toggle--fixed" />
+  <div class="page-tools">
+    <LangSwitch locale={locale} variant="page" />
+    <ThemeToggle locale={locale} class="theme-toggle--page" />
+  </div>
 
   <main id="contenu" tabindex="-1">
     <!-- Accueil -->
@@ -161,7 +166,12 @@ const download = '<path d="M8 2v8m0 0 3-3m-3 3L5 7M3 13h10"/>';
     </Section>
 
     <footer class="footer">
-      © {new Date().getFullYear()} {profil.firstName} {profil.lastName} · <a href={profil.linkedin}>LinkedIn</a> · <a href={profil.github}>GitHub</a>
+      <span>© {new Date().getFullYear()} {profil.firstName} {profil.lastName}</span>
+      <ul class="footer__links">
+        <li><a href={`mailto:${profil.email}`}><Icon name="email" />{profil.email}</a></li>
+        <li><a href={profil.linkedin}><Icon name="linkedin" />LinkedIn</a></li>
+        <li><a href={profil.github}><Icon name="github" />GitHub</a></li>
+      </ul>
     </footer>
   </main>
 </Base>

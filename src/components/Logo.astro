@@ -1,0 +1,18 @@
+---
+/**
+ * Logo d'organisme au format standard (public/img/logos/<id>-light|dark.png, générés
+ * par `npm run logos`). Les deux versions sont dans la page ; le CSS affiche celle
+ * qui correspond au thème actif.
+ */
+interface Props {
+  id: string;
+  alt: string;
+}
+
+const { id, alt } = Astro.props;
+---
+
+<span class="logo">
+  <img class="logo__img logo__img--light" src={`/img/logos/${id}-light.png`} alt={alt} width="120" height="40" loading="lazy" decoding="async" />
+  <img class="logo__img logo__img--dark" src={`/img/logos/${id}-dark.png`} alt="" aria-hidden="true" width="120" height="40" loading="lazy" decoding="async" />
+</span>

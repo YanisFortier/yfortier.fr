@@ -12,7 +12,7 @@ export const experiences: Experience[] = [
     company: 'WeScale',
     start: 2025,
     end: null,
-    logo: { src: '/img/logo_wescale.png' },
+    logo: 'wescale',
     roles: [
       {
         title: { fr: 'Consultant DevSecOps Senior', en: 'Senior DevSecOps Consultant', ko: '시니어 DevSecOps 컨설턴트' },
@@ -56,7 +56,7 @@ export const experiences: Experience[] = [
     company: 'Accenture',
     start: 2024,
     end: 2025,
-    logo: { src: '/img/logo_accenture.svg' },
+    logo: 'accenture',
     roles: [
       {
         title: { fr: 'Consultant DevSecOps Senior', en: 'Senior DevSecOps Consultant', ko: '시니어 DevSecOps 컨설턴트' },
@@ -93,7 +93,7 @@ export const experiences: Experience[] = [
     company: 'Horoquartz',
     start: 2022,
     end: 2024,
-    logo: { src: '/img/logo_horoquartz.png' },
+    logo: 'horoquartz',
     roles: [
       {
         title: { fr: 'Scrum Master & DevSecOps', en: 'Scrum Master & DevSecOps', ko: '스크럼 마스터 & DevSecOps' },
@@ -143,7 +143,7 @@ export const experiences: Experience[] = [
     company: 'Sopra Steria',
     start: 2021,
     end: 2022,
-    logo: { src: '/img/sopra.png' },
+    logo: 'sopra-steria',
     roles: [
       {
         title: {
@@ -184,7 +184,7 @@ export const experiences: Experience[] = [
     company: { fr: 'Tianjin Polytechnic University', en: 'Tianjin Polytechnic University', ko: '톈진공업대학교' },
     flag: '🇨🇳',
     start: 2019,
-    logo: { src: '/img/logo_tjpu.png', background: '#003ea8' },
+    logo: 'tjpu',
     roles: [
       {
         title: {

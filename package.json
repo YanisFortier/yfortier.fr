@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "deploy": "bash scripts/deploy.sh"
+    "deploy": "bash scripts/deploy.sh",
+    "logos": "node scripts/build-logos.mjs"
   },
   "dependencies": {
     "@fontsource/noto-sans-kr": "^5.3.1",

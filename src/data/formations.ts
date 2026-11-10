@@ -19,7 +19,7 @@ export const formations: Formation[] = [
       en: 'Master of Engineering — Computer Science & Networks',
       ko: '공학 석사(Diplôme d’ingénieur) — 컴퓨터공학 및 네트워크',
     },
-    logo: { src: '/img/esaip.jpg' },
+    logo: 'esaip',
     groups: [
       {
         title: t.tech,
@@ -118,7 +118,7 @@ export const formations: Formation[] = [
       en: 'Faculty of Science — Bachelor’s programme in Computer Science',
       ko: '이과대학 — 컴퓨터공학 학사 과정',
     },
-    logo: { src: '/img/angers.jpg' },
+    logo: 'univ-angers',
     groups: [
       {
         title: t.tech,
@@ -159,7 +159,7 @@ export const formations: Formation[] = [
       en: 'Two-year technical degree (DUT) — Electrical Engineering & Industrial Computing',
       ko: '2년제 기술학위(DUT) — 전기공학 및 산업전산',
     },
-    logo: { src: '/img/geii.jpg' },
+    logo: 'univ-tours',
     groups: [
       {
         title: t.tech,
@@ -214,7 +214,7 @@ export const formations: Formation[] = [
       en: 'French Baccalaureate (STI2D) — Information & Digital Systems',
       ko: '프랑스 바칼로레아(STI2D) — 정보·디지털 시스템',
     },
-    logo: { src: '/img/grandmont.jpg' },
+    logo: 'lycee-grandmont',
     groups: [
       {
         title: t.tech,

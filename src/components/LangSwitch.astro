@@ -3,12 +3,14 @@ import { languages, locales, ui, type Locale } from '../i18n/ui';
 
 interface Props {
   locale: Locale;
+  /** bar : bandeau bleu mobile — page : en haut à droite de la page (PC) */
+  variant: 'bar' | 'page';
 }
 
-const { locale } = Astro.props;
+const { locale, variant } = Astro.props;
 ---
 
-<nav class="lang-switch" aria-label={ui[locale].langSwitch}>
+<nav class:list={['lang-switch', `lang-switch--${variant}`]} aria-label={ui[locale].langSwitch}>
   <ul>
     {
       locales.map((l) => (

@@ -3,6 +3,7 @@ import { profil } from '../data/profil';
 import { ui, type Locale } from '../i18n/ui';
 import LangSwitch from './LangSwitch.astro';
 import ThemeToggle from './ThemeToggle.astro';
+import Icon from './Icon.astro';
 
 interface Props {
   locale: Locale;
@@ -19,7 +20,7 @@ const fullName = `${profil.firstName} ${profil.lastName}`;
   <div class="topbar">
     <a class="topbar__name" href={`#${sections[0].id}`}>{fullName}</a>
     <div class="topbar__actions">
-      <LangSwitch locale={locale} />
+      <LangSwitch locale={locale} variant="bar" />
       <ThemeToggle locale={locale} class="theme-toggle--bar" />
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-mobile">{t.menu}</button>
     </div>
@@ -32,8 +33,6 @@ const fullName = `${profil.firstName} ${profil.lastName}`;
 
   <!-- PC : barre latérale fixe -->
   <div class="sidebar__inner">
-    <LangSwitch locale={locale} />
-
     <div class="identity">
       <img class="identity__photo" src={profil.photo} alt={t.portrait(fullName)} width="120" height="120" />
       <div>
@@ -49,9 +48,9 @@ const fullName = `${profil.firstName} ${profil.lastName}`;
     </nav>
 
     <div class="contact">
-      <a href={`mailto:${profil.email}`}>{profil.email}</a>
-      <a href={profil.linkedin}>LinkedIn</a>
-      <a href={profil.github}>GitHub</a>
+      <a href={`mailto:${profil.email}`}><Icon name="email" />{profil.email}</a>
+      <a href={profil.linkedin}><Icon name="linkedin" />LinkedIn</a>
+      <a href={profil.github}><Icon name="github" />GitHub</a>
     </div>
   </div>
 </header>

@@ -3,6 +3,7 @@ import type { Experience } from '../data/types';
 import { period, tr, ui, type Locale } from '../i18n/ui';
 import { rich } from '../lib/rich';
 import Stack from './Stack.astro';
+import Logo from './Logo.astro';
 
 interface Props {
   job: Experience;
@@ -17,19 +18,7 @@ const company = tr(job.company, locale);
 <li class="job">
   <div class="job__aside">
     <span class="job__dates">{period(job.start, job.end, locale)}</span>
-    {
-      job.logo && (
-        <img
-          class:list={['job__logo', { 'job__logo--boxed': job.logo.background }]}
-          style={job.logo.background ? `background:${job.logo.background}` : undefined}
-          src={job.logo.src}
-          alt={company}
-          width="96"
-          height="40"
-          loading="lazy"
-        />
-      )
-    }
+    <Logo id={job.logo} alt={company} />
   </div>
   <div>
     <h3 class="job__company">

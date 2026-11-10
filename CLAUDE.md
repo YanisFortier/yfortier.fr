@@ -25,21 +25,21 @@ npm run preview    # serve dist/ locally
   - `formations.ts`, `competences.ts`, `engagements.ts`, `distinctions.ts`
   - Text fields accept `**bold**` only (rendered by `src/lib/rich.ts`, HTML is escaped).
 - `src/components/Resume.astro` — the whole page for a given `locale`. `src/pages/index.astro`, `en/index.astro`, `ko/index.astro` only render it (the Korean page also imports Noto Sans KR).
-- `src/components/` — `Sidebar` (fixed sidebar on desktop, top bar + accessible menu button on mobile, scroll-spy), `LangSwitch` (flag links, keeps the current section when switching), `Section`, `Job`, `FormationItem`, `Stack`.
+- `src/components/` — `Sidebar` (fixed sidebar on desktop, top bar + accessible menu button on mobile, scroll-spy), `LangSwitch` (flag links in one frame, active one underlined, keeps the current section when switching), `Section`, `Job`, `FormationItem`, `Stack`, `Logo`, `Icon` (Bootstrap Icons paths, MIT), `ThemeToggle`. On desktop the language switcher and theme toggle sit together top-right (`.page-tools`); on mobile they are in the blue top bar.
 - `src/layouts/Base.astro` — `<head>`, `lang`, `hreflang` alternates, SEO/Open Graph meta, fonts, skip link.
-- `src/styles/global.css` — design tokens (`:root`), layout and all component styles. **Light theme by default**; dark theme only via `:root[data-theme="dark"]`, toggled by `ThemeToggle` (fixed top-right on desktop, in the top bar on mobile), saved in `localStorage` and applied by an inline script in `Base.astro` before paint. In dark mode logos sit on a white plate (they have white backgrounds).
+- `src/styles/global.css` — design tokens (`:root`), layout and all component styles. **Light theme by default**; dark theme only via `:root[data-theme="dark"]`, toggled by `ThemeToggle` (fixed top-right on desktop, in the top bar on mobile), saved in `localStorage` and applied by an inline script in `Base.astro` before paint.
 - `public/` — served as-is: `img/`, CV PDFs, `favicon.png`, and `jeux/atom/` (standalone game kept at `/jeux/atom/`).
 
 ## Design conventions
 
 Sober, institutional, accessibility-first (inspired by public-sector design systems, without using DSFR or Marianne, which are restricted):
 - Fonts: Public Sans (self-hosted via `@fontsource/public-sans`); Korean adds Noto Sans KR (`@fontsource/noto-sans-kr`, loaded only on `/ko/`), with `word-break: keep-all`.
-- One accent blue (`--accent`), neutral greys, 1px rules instead of shadows, 2px radius max, no gradients, no emojis in headings.
+- **One single blue in both themes**: the menu navy `#1b3266` (`--brand`) for the sidebar/top bar, solid buttons and bars. Accent text (`--accent`) is that navy in light theme and **white** in dark theme (navy text on black is unreadable). Text on the navy uses `--on-brand-rgb` (white). Never introduce another blue. Neutral greys, 1px rules instead of shadows, 2px radius max, no gradients, no emojis in headings.
 - Keep WCAG AA contrast, visible `:focus-visible`, semantic headings (one `h1`), `alt` on every image, decorative SVG/emoji `aria-hidden`.
 
 ## Editing content
 
-- New job: add an entry at the top of `experiences` in `src/data/experiences.ts` with `fr`, `en` and `ko` texts; put the logo in `public/img/` and reference it as `/img/<file>`.
+- New job: add an entry at the top of `experiences` in `src/data/experiences.ts` with `fr`, `en` and `ko` texts and a `logo` id. Logos are standardized by `npm run logos` (`scripts/build-logos.mjs`): official source files live in `assets/logos/` (a light and a dark/white variant each), output is `public/img/logos/<id>-light.png` / `-dark.png` (480×160, transparent, trimmed, centered). `Logo.astro` shows the variant matching the theme. To add one: drop the files in `assets/logos/`, add a line to `LOGOS` in the script, run `npm run logos`.
 - Any content change must be made in the 3 languages. Korean: concise noun-ending style for bullet points (e.g. "… 구축", "… 자동화"), keep tech names in Latin script.
 - Do not hardcode content or UI strings in components — extend the data files / `src/i18n/ui.ts` instead.
 - CVs exist in French and English only; the Korean page links to both (English first).
