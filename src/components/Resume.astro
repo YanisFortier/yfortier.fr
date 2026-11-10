@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Sidebar from './Sidebar.astro';
+import ThemeToggle from './ThemeToggle.astro';
 import Section from './Section.astro';
 import Job from './Job.astro';
 import FormationItem from './FormationItem.astro';
@@ -30,6 +31,7 @@ const download = '<path d="M8 2v8m0 0 3-3m-3 3L5 7M3 13h10"/>';
 
 <Base locale={locale}>
   <Sidebar locale={locale} sections={sections} />
+  <ThemeToggle locale={locale} class="theme-toggle--fixed" />
 
   <main id="contenu" tabindex="-1">
     <!-- Accueil -->

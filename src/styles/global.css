@@ -32,22 +32,23 @@
   --s-1: 0.25rem; --s-2: 0.5rem; --s-3: 0.75rem; --s-4: 1rem;
   --s-5: 1.5rem;  --s-6: 2rem;   --s-7: 3rem;    --s-8: 4rem; --s-9: 6rem;
 
+  color-scheme: light;
   --radius: 2px;
   --sidebar: 18rem;
   --measure: 54rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #141414;
-    --surface: #1e1e1e;
-    --text: #eeeeee;
-    --text-muted: #a8a8a8;
-    --rule: #2e2e2e;
-    --rule-strong: #3d3d3d;
-    --accent: #8fa8ec;
-    --accent-soft: #1f2a44;
-  }
+/* Thème sombre (choisi via le bouton) */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #141414;
+  --surface: #1e1e1e;
+  --text: #eeeeee;
+  --text-muted: #a8a8a8;
+  --rule: #2e2e2e;
+  --rule-strong: #3d3d3d;
+  --accent: #8fa8ec;
+  --accent-soft: #1f2a44;
 }
 
 /* ============================================================
@@ -248,10 +249,9 @@ main { padding: 0 var(--s-4); }
 .btn:hover { background: var(--accent-soft); }
 .btn--primary { background: var(--accent); color: var(--white); }
 .btn--primary:hover { background: var(--blue-700); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .btn--primary { color: #0d1630; }
-  :root:not([data-theme="light"]) .btn--primary:hover { background: #b3c4f2; }
-}
+/* Thème sombre (choisi via le bouton) */
+:root[data-theme="dark"] .btn--primary { color: #0d1630; }
+:root[data-theme="dark"] .btn--primary:hover { background: #b3c4f2; }
 .btn svg { width: 1em; height: 1em; flex: none; }
 
 /* ============================================================
@@ -283,8 +283,14 @@ main { padding: 0 var(--s-4); }
 .job__logo {
   width: 6rem; height: 2.5rem; object-fit: contain; object-position: left center;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .job__logo { background: #fff; padding: 4px 6px; border-radius: var(--radius); }
+/* Thème sombre (choisi via le bouton) */
+:root[data-theme="dark"] .job__logo {
+  /* les logos ont un fond blanc : on les pose tous sur une même plaque claire */
+  box-sizing: border-box;
+  background: #fff; padding: 4px 8px;
+  object-position: center;
+  border-radius: var(--radius);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
 }
 
 .job__company { font-size: 1.5rem; font-weight: 800; }
@@ -410,12 +416,11 @@ main { padding: 0 var(--s-4); }
 .v-plus li { background: #e3f1e7; color: #1d6b34; }
 .v-minus h4 { color: #a3262f; }
 .v-minus li { background: #f8e4e5; color: #a3262f; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .v-plus h4 { color: #7fd197; }
-  :root:not([data-theme="light"]) .v-plus li { background: #1c3324; color: #a6e3b8; }
-  :root:not([data-theme="light"]) .v-minus h4 { color: #f0959b; }
-  :root:not([data-theme="light"]) .v-minus li { background: #3a1f22; color: #f5b8bc; }
-}
+/* Thème sombre (choisi via le bouton) */
+:root[data-theme="dark"] .v-plus h4 { color: #7fd197; }
+:root[data-theme="dark"] .v-plus li { background: #1c3324; color: #a6e3b8; }
+:root[data-theme="dark"] .v-minus h4 { color: #f0959b; }
+:root[data-theme="dark"] .v-minus li { background: #3a1f22; color: #f5b8bc; }
 
 /* ============================================================
    Prix & certifications
@@ -479,3 +484,49 @@ main { padding: 0 var(--s-4); }
 :lang(ko) .group__title,
 :lang(ko) .values__lists h4 { letter-spacing: 0.02em; }
 :lang(ko) .hero__title { letter-spacing: -0.02em; }
+
+/* ============================================================
+   Bouton thème clair / sombre
+   ============================================================ */
+.theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.75rem; height: 2.75rem; padding: 0;
+  cursor: pointer;
+  border-radius: var(--radius);
+  font: inherit;
+}
+.theme-toggle svg { width: 1.25rem; height: 1.25rem; }
+.theme-toggle .theme-toggle__sun { display: none; }
+.theme-toggle[aria-pressed="true"] .theme-toggle__sun { display: block; }
+.theme-toggle[aria-pressed="true"] .theme-toggle__moon { display: none; }
+
+/* PC : en haut à droite de la page */
+.theme-toggle--fixed {
+  position: fixed; top: var(--s-4); right: var(--s-4); z-index: 20;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--rule-strong);
+}
+.theme-toggle--fixed:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Mobile : dans le bandeau bleu */
+.theme-toggle--bar {
+  color: var(--white); background: transparent;
+  border: 1px solid rgba(255,255,255,0.5);
+}
+.theme-toggle--bar:hover { background: rgba(255,255,255,0.12); }
+
+@media (max-width: 991.98px) { .theme-toggle--fixed { display: none; } }
+@media (min-width: 992px) { .theme-toggle--bar { display: none; } }
+
+/* Bandeau mobile un peu plus serré pour tout faire tenir */
+@media (max-width: 991.98px) {
+  .topbar__actions { gap: var(--s-1); }
+  .menu-btn { padding: var(--s-2) var(--s-3); }
+}
+@media (max-width: 399.98px) {
+  .topbar { padding-left: var(--s-3); padding-right: var(--s-3); }
+  .topbar__name { font-size: 0.9375rem; }
+  .lang-switch a { min-width: 2rem; padding: 0; }
+  .theme-toggle--bar { width: 2.5rem; }
+}

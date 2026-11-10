@@ -27,7 +27,7 @@ npm run preview    # serve dist/ locally
 - `src/components/Resume.astro` — the whole page for a given `locale`. `src/pages/index.astro`, `en/index.astro`, `ko/index.astro` only render it (the Korean page also imports Noto Sans KR).
 - `src/components/` — `Sidebar` (fixed sidebar on desktop, top bar + accessible menu button on mobile, scroll-spy), `LangSwitch` (flag links, keeps the current section when switching), `Section`, `Job`, `FormationItem`, `Stack`.
 - `src/layouts/Base.astro` — `<head>`, `lang`, `hreflang` alternates, SEO/Open Graph meta, fonts, skip link.
-- `src/styles/global.css` — design tokens (`:root`), layout and all component styles. Dark mode via `prefers-color-scheme`.
+- `src/styles/global.css` — design tokens (`:root`), layout and all component styles. **Light theme by default**; dark theme only via `:root[data-theme="dark"]`, toggled by `ThemeToggle` (fixed top-right on desktop, in the top bar on mobile), saved in `localStorage` and applied by an inline script in `Base.astro` before paint. In dark mode logos sit on a white plate (they have white backgrounds).
 - `public/` — served as-is: `img/`, CV PDFs, `favicon.png`, and `jeux/atom/` (standalone game kept at `/jeux/atom/`).
 
 ## Design conventions

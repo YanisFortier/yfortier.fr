@@ -26,6 +26,7 @@ export const ui = {
     navMain: 'Navigation principale',
     navMobile: 'Navigation principale (mobile)',
     langSwitch: 'Choisir la langue',
+    theme: 'Thème sombre',
     portrait: (name: string) => `Portrait de ${name}`,
     sections: {
       accueil: 'Accueil',
@@ -66,6 +67,7 @@ export const ui = {
     navMain: 'Main navigation',
     navMobile: 'Main navigation (mobile)',
     langSwitch: 'Choose language',
+    theme: 'Dark theme',
     portrait: (name: string) => `Portrait of ${name}`,
     sections: {
       accueil: 'Home',
@@ -106,6 +108,7 @@ export const ui = {
     navMain: '주요 메뉴',
     navMobile: '주요 메뉴 (모바일)',
     langSwitch: '언어 선택',
+    theme: '다크 모드',
     portrait: (name: string) => `${name} 프로필 사진`,
     sections: {
       accueil: '홈',

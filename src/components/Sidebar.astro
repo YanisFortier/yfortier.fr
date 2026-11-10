@@ -2,6 +2,7 @@
 import { profil } from '../data/profil';
 import { ui, type Locale } from '../i18n/ui';
 import LangSwitch from './LangSwitch.astro';
+import ThemeToggle from './ThemeToggle.astro';
 
 interface Props {
   locale: Locale;
@@ -19,6 +20,7 @@ const fullName = `${profil.firstName} ${profil.lastName}`;
     <a class="topbar__name" href={`#${sections[0].id}`}>{fullName}</a>
     <div class="topbar__actions">
       <LangSwitch locale={locale} />
+      <ThemeToggle locale={locale} class="theme-toggle--bar" />
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-mobile">{t.menu}</button>
     </div>
   </div>

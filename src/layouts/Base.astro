@@ -23,10 +23,16 @@ const ogImage = new URL('/img/og_image.jpg', Astro.site);
 ---
 
 <!doctype html>
-<html lang={lang.htmlLang}>
+<html lang={lang.htmlLang} data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Thème : clair par défaut, sombre seulement si choisi via le bouton (mémorisé). Exécuté avant l'affichage. -->
+    <script is:inline>
+      try {
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+      } catch (e) {}
+    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={`${profil.firstName} ${profil.lastName}`} />
@@ -47,5 +53,26 @@ const ogImage = new URL('/img/og_image.jpg', Astro.site);
   <body>
     <a class="skip-link" href="#contenu">{ui[locale].skip}</a>
     <slot />
+
+    <script>
+      // Bascule clair/sombre : tous les boutons .theme-toggle restent synchronisés
+      const root = document.documentElement;
+      const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.theme-toggle'));
+      const sync = () => {
+        const dark = root.dataset.theme === 'dark';
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(dark)));
+      };
+      buttons.forEach((b) =>
+        b.addEventListener('click', () => {
+          const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+          root.dataset.theme = next;
+          try {
+            localStorage.setItem('theme', next);
+          } catch {}
+          sync();
+        }),
+      );
+      sync();
+    </script>
   </body>
 </html>
