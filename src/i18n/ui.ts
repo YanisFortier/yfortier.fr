@@ -55,6 +55,7 @@ export const ui = {
     certifications: 'Certifications & formations',
     awards: 'Prix',
     contact: 'Me contacter',
+    madeWith: { before: 'Fait avec', heart: 'amour', after: 'par Yanis' },
     pdf: '(PDF)',
     cv: [
       { lang: 'fr', label: 'CV en français' },
@@ -96,6 +97,7 @@ export const ui = {
     certifications: 'Certifications & training',
     awards: 'Awards',
     contact: 'Contact me',
+    madeWith: { before: 'Made with', heart: 'love', after: 'by Yanis' },
     pdf: '(PDF)',
     cv: [
       { lang: 'en', label: 'Resume in English' },
@@ -137,6 +139,7 @@ export const ui = {
     certifications: '자격 및 교육',
     awards: '수상',
     contact: '연락하기',
+    madeWith: { before: 'Yanis가', heart: '사랑', after: '가득 담아 만들었어요' },
     pdf: '(PDF)',
     cv: [
       { lang: 'en', label: '영문 이력서' },

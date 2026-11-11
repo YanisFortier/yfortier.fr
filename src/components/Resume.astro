@@ -170,7 +170,7 @@ const download = '<path d="M8 2v8m0 0 3-3m-3 3L5 7M3 13h10"/>';
     </Section>
 
     <footer class="footer">
-      <span>© {new Date().getFullYear()} {profil.firstName} {profil.lastName}</span>
+      <span class="footer__made">{t.madeWith.before} <span role="img" aria-label={t.madeWith.heart}>❤️</span> {t.madeWith.after}</span>
       <ul class="footer__links">
         <li><a href={`mailto:${profil.email}`}><Icon name="email" />{profil.email}</a></li>
         <li><a href={profil.linkedin}><Icon name="linkedin" />LinkedIn</a></li>
