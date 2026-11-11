@@ -207,6 +207,7 @@ export const formations: Formation[] = [
   },
   {
     school: { fr: 'Lycée Grandmont — Tours', en: 'Grandmont High School — Tours', ko: '그랑몽 고등학교 — 투르' },
+    inCv: false,
     start: 2013,
     end: 2015,
     degree: {

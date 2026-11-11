@@ -10,6 +10,8 @@ export const profil = {
   photo: '/img/profile.jpg',
   email: 'yanis.fortier@gmail.com',
   phone: '06 33 50 86 14',
+  phoneIntl: '+33 6 33 50 86 14',
+  website: 'yfortier.fr',
   linkedin: 'https://www.linkedin.com/in/yanis-fortier/',
   github: 'https://github.com/YanisFortier',
   /** Phrase d'accroche de la page d'accueil */
@@ -33,9 +35,11 @@ export const profil = {
       value: { fr: 'Depuis 2019', en: 'Since 2019', ko: '2019년부터' },
     },
   ],
+  /** CV PDF générés depuis ces données par `npm run cv` (scripts/build-cv.mjs) */
   cv: {
-    fr: '/CV_FORTIER_Yanis_2025.pdf',
-    en: '/CV_FORTIER_Yanis_2025_English.pdf',
+    fr: '/cv/Yanis-Fortier-CV-FR.pdf',
+    en: '/cv/Yanis-Fortier-CV-EN.pdf',
+    ko: '/cv/Yanis-Fortier-CV-KO.pdf',
   },
   /** Texte des aperçus de partage (LinkedIn, Slack…) */
   description: {

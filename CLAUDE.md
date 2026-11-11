@@ -43,7 +43,7 @@ Sober, institutional, accessibility-first (inspired by public-sector design syst
 - New job: add an entry at the top of `experiences` in `src/data/experiences.ts` with `fr`, `en` and `ko` texts and a `logo` id. Logos are standardized by `npm run logos` (`scripts/build-logos.mjs`): official source files live in `assets/logos/` (a light and a dark/white variant each), output is `public/img/logos/<id>-light.png` / `-dark.png` (480×160, transparent, trimmed, centered). `Logo.astro` shows the variant matching the theme. To add one: drop the files in `assets/logos/`, add a line to `LOGOS` in the script, run `npm run logos`.
 - Any content change must be made in the 3 languages. Korean: concise noun-ending style for bullet points (e.g. "… 구축", "… 자동화"), keep tech names in Latin script.
 - Do not hardcode content or UI strings in components — extend the data files / `src/i18n/ui.ts` instead.
-- CVs exist in French and English only; the Korean page links to both (English first).
+- CVs (FR, EN, KO) are **generated from the same data**: `src/pages/cv/[lang].astro` is an A4 page (navy sidebar), printed to `public/cv/Yanis-Fortier-CV-<LANG>.pdf` by `npm run cv` (`scripts/build-cv.mjs`, headless Chrome; FR/EN are also copied to the legacy `public/CV_FORTIER_Yanis_2025*.pdf` URLs). After any content change, run `npm run cv`, check the PDFs still fit on one page, and commit them. Entries with `inCv: false` appear on the site only.
 
 ## Deployment
 

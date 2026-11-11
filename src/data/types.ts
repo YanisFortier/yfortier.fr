@@ -24,6 +24,8 @@ export interface Experience {
   /** Identifiant du logo standardisé : public/img/logos/<logo>-light|dark.png (voir scripts/build-logos.mjs) */
   logo: string;
   roles: Role[];
+  /** false = affiché sur le site mais pas dans le CV PDF */
+  inCv?: boolean;
 }
 
 export interface Group {
@@ -48,6 +50,8 @@ export interface Formation {
   logo: string;
   groups: Group[];
   exchanges?: Exchange[];
+  /** false = affiché sur le site mais pas dans le CV PDF */
+  inCv?: boolean;
 }
 
 export interface Engagement {

@@ -61,6 +61,7 @@ export const ui = {
       { lang: 'fr', label: 'CV en français' },
       { lang: 'en', label: 'Resume in English' },
     ],
+    cvDoc: { profile: 'Profil', contact: 'Contact', licence: 'Permis B', exchanges: 'Échanges :', file: 'CV — Yanis Fortier' },
   },
   en: {
     skip: 'Skip to content',
@@ -103,6 +104,7 @@ export const ui = {
       { lang: 'en', label: 'Resume in English' },
       { lang: 'fr', label: 'CV in French' },
     ],
+    cvDoc: { profile: 'Profile', contact: 'Contact', licence: 'Driving licence (B)', exchanges: 'Exchanges:', file: 'Resume — Yanis Fortier' },
   },
   ko: {
     skip: '본문 바로가기',
@@ -142,9 +144,10 @@ export const ui = {
     madeWith: { before: 'Yanis가', heart: '사랑', after: '가득 담아 만들었어요' },
     pdf: '(PDF)',
     cv: [
+      { lang: 'ko', label: '한국어 이력서' },
       { lang: 'en', label: '영문 이력서' },
-      { lang: 'fr', label: '프랑스어 이력서' },
     ],
+    cvDoc: { profile: '소개', contact: '연락처', licence: '운전면허 (B종)', exchanges: '교환학생:', file: '이력서 — Yanis Fortier' },
   },
 } satisfies Record<Locale, unknown>;
 

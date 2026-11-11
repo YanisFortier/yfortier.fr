@@ -184,6 +184,7 @@ export const experiences: Experience[] = [
     company: { fr: 'Tianjin Polytechnic University', en: 'Tianjin Polytechnic University', ko: '톈진공업대학교' },
     flag: '🇨🇳',
     start: 2019,
+    inCv: false, // déjà cité dans les échanges ESAIP du CV
     logo: 'tjpu',
     roles: [
       {

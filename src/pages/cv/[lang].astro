@@ -1,0 +1,253 @@
+---
+/**
+ * CV au format A4, généré depuis les mêmes données que le site.
+ * Pages /cv/fr/, /cv/en/, /cv/ko/ — imprimées en PDF par `npm run cv` (scripts/build-cv.mjs).
+ */
+import '@fontsource/public-sans/400.css';
+import '@fontsource/public-sans/600.css';
+import '@fontsource/public-sans/700.css';
+import '@fontsource/public-sans/800.css';
+import '@fontsource/noto-sans-kr/400.css';
+import '@fontsource/noto-sans-kr/600.css';
+import '@fontsource/noto-sans-kr/700.css';
+import '@fontsource/noto-sans-kr/800.css';
+import Icon from '../../components/Icon.astro';
+import { languages, locales, period, tr, ui, type Locale } from '../../i18n/ui';
+import { rich } from '../../lib/rich';
+import { profil } from '../../data/profil';
+import { experiences } from '../../data/experiences';
+import { formations } from '../../data/formations';
+import { competences, langues } from '../../data/competences';
+import { certifications, prix } from '../../data/distinctions';
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+
+const locale = Astro.params.lang as Locale;
+const t = ui[locale];
+const d = t.cvDoc;
+const fullName = `${profil.firstName} ${profil.lastName}`;
+const jobs = experiences.filter((e) => e.inCv !== false);
+const schools = formations.filter((f) => f.inCv !== false);
+const skills = competences.map((g) => ({ title: g.title[locale], items: tr(g.items, locale).map((i) => tr(i, locale)) }));
+---
+
+<!doctype html>
+<html lang={languages[locale].htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{d.file}</title>
+  </head>
+  <body>
+    <article class="cv">
+      <!-- Colonne marine -->
+      <aside class="side">
+        <img class="photo" src={profil.photo} alt={t.portrait(fullName)} width="110" height="110" />
+        <h1 class="name">{profil.firstName}<br />{profil.lastName}</h1>
+        <p class="title">{profil.title[locale]}</p>
+
+        <section>
+          <h2>{d.contact}</h2>
+          <ul class="contact">
+            <li><Icon name="phone" />{profil.phoneIntl}</li>
+            <li><Icon name="email" />{profil.email}</li>
+            <li><Icon name="web" />{profil.website}</li>
+            <li><Icon name="linkedin" />linkedin.com/in/yanis-fortier</li>
+            <li><Icon name="github" />github.com/YanisFortier</li>
+            <li><Icon name="car" />{d.licence}</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>{t.sections.competences}</h2>
+          {
+            skills.map((g) => (
+              <div class="skill">
+                <h3>{g.title}</h3>
+                <p>{g.items.join(' · ')}</p>
+              </div>
+            ))
+          }
+        </section>
+
+        <section>
+          <h2>{t.languages}</h2>
+          <ul class="langs">
+            {
+              langues.map((l) => (
+                <li>
+                  <span>{l.name[locale]}</span>
+                  <span class="lvl">{l.level[locale]}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        <section>
+          <h2>{t.certifications}</h2>
+          <ul class="certs">
+            {certifications[locale].map((c) => <li set:html={rich(c)} />)}
+          </ul>
+        </section>
+
+        <section>
+          <h2>{t.awards}</h2>
+          <ul class="certs">
+            {prix.map((p) => <li>{p.event} — {p.rank[locale]}</li>)}
+          </ul>
+        </section>
+      </aside>
+
+      <!-- Colonne principale -->
+      <main class="main">
+        <p class="lead">{profil.lead[locale]}</p>
+
+        <section>
+          <h2>{t.sections.experiences}</h2>
+          {
+            jobs.map((job) => (
+              <div class="item">
+                <div class="item__head">
+                  <h3>{tr(job.company, locale)}</h3>
+                  <span class="dates">{period(job.start, job.end, locale)}</span>
+                </div>
+                {job.roles.map((role) => (
+                  <div class="role">
+                    <p class="role__title">
+                      {tr(role.title, locale)}
+                      {role.missions && <span class="mission"> — {role.missions[locale].join(' · ')}</span>}
+                    </p>
+                    <ul class="points">
+                      {role.points[locale].map((p) => (
+                        <li set:html={rich(p)} />
+                      ))}
+                    </ul>
+                    <p class="stack">{role.stack.map((s) => tr(s, locale)).join(' · ')}</p>
+                  </div>
+                ))}
+              </div>
+            ))
+          }
+        </section>
+
+        <section>
+          <h2>{t.sections.formations}</h2>
+          {
+            schools.map((f) => (
+              <div class="item item--school">
+                <div class="item__head">
+                  <h3>{tr(f.school, locale)}</h3>
+                  <span class="dates">{period(f.start, f.end, locale)}</span>
+                </div>
+                <p class="role__title">{f.degree[locale]}</p>
+                {f.exchanges && (
+                  <p class="exch">
+                    <strong>{d.exchanges}</strong>{' '}
+                    {f.exchanges.map((x) => `${tr(x.school, locale)} (${x.country[locale]}, ${x.period[locale]})`).join(' · ')}
+                  </p>
+                )}
+              </div>
+            ))
+          }
+        </section>
+      </main>
+    </article>
+
+    <style is:global>
+      :root {
+        --navy: #1b3266;
+        --ink: #161616;
+        --muted: #595959;
+        --rule: #d9dce3;
+        --font: 'Public Sans', 'Noto Sans KR', system-ui, sans-serif;
+      }
+      @page { size: A4; margin: 0; }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; background: #e9ebf0; }
+      body {
+        font-family: var(--font);
+        color: var(--ink);
+        font-size: 8.3pt;
+        line-height: 1.38;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      :lang(ko) body { word-break: keep-all; }
+      h1, h2, h3, p, ul { margin: 0; padding: 0; }
+      ul { list-style: none; }
+
+      .cv {
+        width: 210mm; height: 297mm; overflow: hidden;
+        margin: 0 auto;
+        display: grid; grid-template-columns: 66mm 1fr;
+        background: #fff;
+      }
+      @media screen { .cv { margin: 8mm auto; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15); } }
+
+      /* ----- Colonne marine ----- */
+      .side {
+        background: var(--navy); color: #fff;
+        padding: 9mm 7mm 7mm;
+        display: flex; flex-direction: column; gap: 3.4mm;
+      }
+      .photo {
+        width: 26mm; height: 26mm; border-radius: 50%; object-fit: cover; object-position: center 20%;
+        border: 0.6mm solid rgba(255, 255, 255, 0.9);
+      }
+      .name { font-size: 19pt; line-height: 1.02; font-weight: 800; letter-spacing: -0.01em; }
+      .title { margin-top: -1.6mm; font-size: 8.6pt; font-weight: 600; color: rgba(255, 255, 255, 0.82); }
+      .side h2 {
+        font-size: 7.4pt; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.7);
+        padding-bottom: 1mm; margin-bottom: 1.5mm;
+        border-bottom: 0.25mm solid rgba(255, 255, 255, 0.25);
+      }
+      :lang(ko) .side h2 { letter-spacing: 0.02em; }
+      .contact { display: grid; gap: 0.9mm; }
+      .contact li { display: flex; align-items: center; gap: 2mm; overflow-wrap: anywhere; }
+      .contact .icon { width: 3.2mm; height: 3.2mm; flex: none; opacity: 0.85; }
+      .skill + .skill { margin-top: 1.3mm; }
+      .skill h3 { font-size: 7.6pt; font-weight: 700; margin-bottom: 0.4mm; }
+      .skill p { color: rgba(255, 255, 255, 0.86); font-size: 7.4pt; }
+      .langs li { display: flex; justify-content: space-between; gap: 2mm; padding: 0.3mm 0; }
+      .langs .lvl { font-weight: 700; white-space: nowrap; }
+      .certs { display: grid; gap: 0.6mm; font-size: 7.3pt; color: rgba(255, 255, 255, 0.88); }
+      .certs strong { color: #fff; }
+
+      /* ----- Colonne principale ----- */
+      .main { padding: 9mm 9mm 7mm 8mm; display: flex; flex-direction: column; gap: 3.6mm; }
+      .lead {
+        font-size: 9.2pt; line-height: 1.42; font-weight: 600; color: var(--navy);
+        padding-left: 3mm; border-left: 0.8mm solid var(--navy);
+      }
+      .main h2 {
+        font-size: 10.5pt; font-weight: 800; color: var(--navy);
+        letter-spacing: 0.06em; text-transform: uppercase;
+        padding-bottom: 1mm; margin-bottom: 2mm;
+        border-bottom: 0.35mm solid var(--navy);
+      }
+      :lang(ko) .main h2 { letter-spacing: 0.02em; }
+      .item + .item { margin-top: 2.8mm; }
+      .item__head { display: flex; justify-content: space-between; align-items: baseline; gap: 3mm; }
+      .item h3 { font-size: 10pt; font-weight: 800; }
+      .dates { font-size: 8pt; font-weight: 600; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+      .role + .role { margin-top: 1.2mm; }
+      .role__title { font-weight: 700; color: var(--navy); margin-top: 0.4mm; }
+      .mission { font-weight: 600; color: var(--muted); }
+      .points { margin-top: 0.7mm; display: grid; gap: 0.5mm; }
+      .points li { position: relative; padding-left: 3mm; }
+      .points li::before {
+        content: ''; position: absolute; left: 0.6mm; top: 0.62em;
+        width: 1mm; height: 1mm; border-radius: 50%; background: var(--navy);
+      }
+      .stack { margin-top: 0.6mm; font-size: 7.3pt; color: var(--muted); }
+      .item--school + .item--school { margin-top: 1.6mm; }
+      .exch { margin-top: 0.6mm; font-size: 7.8pt; color: var(--muted); }
+      .exch strong { color: var(--ink); }
+    </style>
+  </body>
+</html>

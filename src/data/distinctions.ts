@@ -8,6 +8,8 @@ export const certifications: L<string[]> = {
     'Certification **Google Digital Active**',
     'Formation **salle blanche** (ISO 7 & 8)',
     'Salarié sauveteur secouriste du travail (SST)',
+    'Gestion de projet **Agile, Scrum, SAFe & Kanban**',
+    '**Éco-conception** d’applications',
     '**Habilitation électrique** : B1V-B2V, BS, BE essai, BE Mesurage en BT et H0 en HTA',
   ],
   en: [
@@ -16,6 +18,8 @@ export const certifications: L<string[]> = {
     '**Google Digital Active** certification',
     '**Cleanroom** training (ISO 7 & 8)',
     'Workplace first aid certificate (SST)',
+    '**Agile, Scrum, SAFe & Kanban** project management',
+    '**Eco-design** of applications',
     '**Electrical safety clearance**: B1V-B2V, BS, BE testing, BE low-voltage measurement and H0 high-voltage',
   ],
   ko: [
@@ -24,6 +28,8 @@ export const certifications: L<string[]> = {
     '**Google Digital Active** 인증',
     '**클린룸** 교육(ISO 7 & 8)',
     '산업 응급처치 자격(SST)',
+    '**애자일·스크럼·SAFe·칸반** 프로젝트 관리',
+    '애플리케이션 **에코디자인**',
     '**전기 작업 자격**: B1V-B2V, BS, BE 시험, 저압 BE 측정, 고압 H0',
   ],
 };
