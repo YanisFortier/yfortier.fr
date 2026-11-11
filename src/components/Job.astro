@@ -29,7 +29,7 @@ const company = tr(job.company, locale);
       job.roles.map((role, i) => {
         const missions = role.missions?.[locale];
         return (
-          <div class:list={{ subrole: i > 0 }}>
+          <div class:list={['role', { subrole: i > 0 }]}>
             <p class="job__role">{tr(role.title, locale)}</p>
             {missions && (
               <div class="missions">
