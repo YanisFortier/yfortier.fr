@@ -83,15 +83,19 @@ const download = '<path d="M8 2v8m0 0 3-3m-3 3L5 7M3 13h10"/>';
 
     <Section id="competences" eyebrow={t.eyebrows.competences} title={t.sections.competences}>
       <div class="skills">
-        {
-          competences.map((g, i) => (
-            <div class:list={['skill-group', { 'skill-group--wide': i === 0 }]}>
-              <h3 class="group__title">{g.title[locale]}</h3>
-              <Stack items={tr(g.items, locale)} locale={locale} label={g.title[locale]} />
-            </div>
-          ))
-        }
-        <div class="skill-group">
+        <!-- Colonne gauche : compétences -->
+        <div class="skills__col">
+          {
+            competences.map((g) => (
+              <div class="skill-group">
+                <h3 class="group__title">{g.title[locale]}</h3>
+                <Stack items={tr(g.items, locale)} locale={locale} label={g.title[locale]} />
+              </div>
+            ))
+          }
+        </div>
+        <!-- Colonne droite : langues -->
+        <div class="skill-group skills__langs">
           <h3 class="group__title">{t.languages}</h3>
           <ul class="langs">
             {

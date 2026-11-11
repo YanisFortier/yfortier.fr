@@ -34,7 +34,7 @@ npm run preview    # serve dist/ locally
 
 Sober, institutional, accessibility-first (inspired by public-sector design systems, without using DSFR or Marianne, which are restricted):
 - Fonts: Public Sans (self-hosted via `@fontsource/public-sans`); Korean adds Noto Sans KR (`@fontsource/noto-sans-kr`, loaded only on `/ko/`), with `word-break: keep-all`.
-- **One single blue in both themes**: the menu navy `#1b3266` (`--brand`) for the sidebar/top bar, solid buttons and bars. Accent text (`--accent`) is that navy in light theme and **white** in dark theme (navy text on black is unreadable). Text on the navy uses `--on-brand-rgb` (white). Never introduce another blue. Neutral greys, 1px rules instead of shadows, 2px radius max, no gradients, no emojis in headings.
+- **One single blue in both themes**: the menu navy `#1b3266` (`--brand`) for the sidebar/top bar, solid buttons and bars. Accent text (`--accent`) is that navy in light theme and, in dark theme, a lighter shade of the same 222° hue, `#5c85e0` (5.1:1 on the dark background — navy text on black is unreadable). Text on the navy uses `--on-brand-rgb` (white). Never introduce another blue. Neutral greys, 1px rules instead of shadows, 2px radius max, no gradients, no emojis in headings.
 - Layout: content max width `--measure` (80rem), centered beside the sidebar. From 1280px, experience stacks sit in a right-hand column (`.role` grid) and engagements go 3 columns — use the width without making text lines longer.
 - Keep WCAG AA contrast, visible `:focus-visible`, semantic headings (one `h1`), `alt` on every image, decorative SVG/emoji `aria-hidden`.
 

@@ -48,8 +48,10 @@
   --text-muted: #a8a8a8;
   --rule: #2e2e2e;
   --rule-strong: #3d3d3d;
-  /* Le marine du menu reste le même ; seul le texte d'accent passe en blanc */
-  --accent: #ffffff;
+  /* Le marine du menu reste le même (aplats, barres, menu).
+     Le texte d'accent prend une version éclaircie de ce même bleu (teinte 222°),
+     lisible sur fond sombre : contraste 5,1:1 (AA). */
+  --accent: #5c85e0;
   --accent-soft: #1f2a41;
 }
 
@@ -366,10 +368,13 @@ main { padding: 0 var(--s-4); }
 /* ============================================================
    Compétences
    ============================================================ */
-.skills { display: grid; gap: var(--s-6); }
-@media (min-width: 768px) { .skills { grid-template-columns: 1fr 1fr; } }
+.skills { display: grid; gap: var(--s-7); align-items: start; }
+@media (min-width: 768px) {
+  /* compétences à gauche (tags, plus larges), langues à droite */
+  .skills { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: var(--s-7); }
+}
+.skills__col { display: grid; gap: var(--s-6); }
 .skills .stack { margin-top: var(--s-3); }
-.skill-group--wide { grid-column: 1 / -1; }
 
 .langs { list-style: none; margin-top: var(--s-3); border-top: 1px solid var(--rule-strong); }
 .langs li {
